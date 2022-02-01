@@ -1,16 +1,18 @@
 import * as actions from '../actions/usersActions'
 
 const initialState = {
+  userData: null,
+  currentUser: null,
   loading: false,
   users: [],
 }
 
 export const usersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.LOGIN_REQUEST:
+    case actions.SET_CURRENT_USER:
       return {
         ...state,
-        loading: true,
+        currentUser: action.payload,
       }
     default:
       return state

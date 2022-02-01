@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
-  users: usersReducer,
+  usersReducer: usersReducer,
 })
 
 const middleware = [thunk]
