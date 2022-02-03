@@ -1,11 +1,15 @@
 import React from 'react'
 import EmailPasswordAuthLogin from '../components/EmailPasswordAuthSignIn'
+import Layout from '../components/Layout'
+import { ConnectScreen } from '../styles/StyledConnectScreen'
 
 const signIn = () => {
   return (
-    <div>
-      <EmailPasswordAuthLogin />
-    </div>
+    <Layout>
+      <ConnectScreen>
+        <EmailPasswordAuthLogin />
+      </ConnectScreen>
+    </Layout>
   )
 }
 

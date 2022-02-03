@@ -21,15 +21,15 @@ const Navigation = ({ state }) => {
         <div className="connection-link">
           {state.usersReducer.currentUser ? (
             <div className="connect-button" onClick={signOutHandler}>
-              Sign-out
+              Se déconnecter
             </div>
           ) : (
             <>
               <Link href="/sign-in">
-                <div className="connect-button">Sign-in</div>
+                <div className="connect-button">Se connecter</div>
               </Link>
               <Link href="/sign-up">
-                <div className="connect-button">Sign-up</div>
+                <div className="connect-button">S'enregistrer</div>
               </Link>
             </>
           )}
