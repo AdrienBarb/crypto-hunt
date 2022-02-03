@@ -13,9 +13,14 @@ export const NavigationWrapper = styled.div`
     justify-content: space-between;
   }
 
+  .navigations-links {
+    display: flex;
+  }
+
   .navigation-link {
     color: white;
     cursor: pointer;
+    margin-right: 1rem;
   }
 
   .connection-link {

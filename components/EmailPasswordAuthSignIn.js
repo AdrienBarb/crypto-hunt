@@ -10,18 +10,6 @@ import { ConnectFormWrapper } from '../styles/StyledConnectForm'
 const EmailPasswordAuthLogin = () => {
   const Router = useRouter()
 
-  const loginHandler = (email, password) => async () => {
-    console.log('je pass ici')
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password)
-      Router.push('/')
-    } catch (error) {
-      console.log('error')
-      alert(error)
-    }
-  }
-
   return (
     <ConnectFormWrapper>
       <Formik
@@ -35,7 +23,6 @@ const EmailPasswordAuthLogin = () => {
             .required('Veuillez renseigner le mot de passe.'),
         })}
         onSubmit={async (values, actions) => {
-          console.log('coucou')
           try {
             await signInWithEmailAndPassword(
               auth,
