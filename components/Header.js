@@ -1,14 +1,9 @@
 import React from 'react'
 
-import { auth } from '../firebase/clientApp'
-import { signOut } from 'firebase/auth'
+import Navigation from '../connects/Navigation'
 
 const Header = () => {
-  const signOutHandler = async () => {
-    await signOut(auth)
-  }
-
-  return <button onClick={signOutHandler}>Sign out</button>
+  return <Navigation />
 }
 
 export default Header
