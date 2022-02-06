@@ -13,6 +13,11 @@ export const cryptoProjectsReducers = (state = initialState, action) => {
         ...state,
         cryptoProjects: [...state.cryptoProjects, action.payload],
       }
+    case actions.SET_CURRENT_CRYPTO_PROJECT:
+      return {
+        ...state,
+        currentCryptoProject: action.payload,
+      }
     default:
       return state
   }

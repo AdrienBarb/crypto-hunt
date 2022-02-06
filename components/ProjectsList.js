@@ -8,13 +8,9 @@ const ProjectsList = ({ getCryptoProjects, state }) => {
     return unsubscribe
   }, [])
 
-  console.log('STATE ', state)
-  console.log('STATE 2', state.cryptoProjectsReducers)
-
   return (
     <div>
       {state.cryptoProjectsReducers.cryptoProjects.map((cryptoProject) => {
-        console.log('JE PASSE DANS LA BOUCLE', cryptoProject)
         return <CryptoProjectCard data={cryptoProject} />
       })}
     </div>

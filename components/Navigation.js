@@ -16,7 +16,7 @@ const Navigation = ({ state }) => {
           <Link href="/">
             <div className="navigation-link">Home</div>
           </Link>
-          <Link href="/crypto">
+          <Link href="/cryptos">
             <div className="navigation-link">Crypto</div>
           </Link>
         </div>

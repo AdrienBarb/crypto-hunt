@@ -8,16 +8,18 @@ import {
 } from '../styles/StyledScreenContainer'
 import CryptoProjectForm from '../connects/CryptoProjectForm'
 
-const AddCryptoProjectFormScreen = () => {
+const EditCryptoProjectFormScreen = () => {
+  const router = useRouter()
+
   return (
     <Layout>
       <ScreenContainer>
         <CenterContainer>
-          <CryptoProjectForm />
+          <CryptoProjectForm edit={router.pathname == '/edit-crypto-project'} />
         </CenterContainer>
       </ScreenContainer>
     </Layout>
   )
 }
 
-export default AddCryptoProjectFormScreen
+export default EditCryptoProjectFormScreen
