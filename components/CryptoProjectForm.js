@@ -5,7 +5,12 @@ import Link from 'next/link'
 import { ConnectFormWrapper } from '../styles/StyledConnectForm'
 import { useRouter } from 'next/router'
 
-const CryptoProjectForm = ({ addCryptoProject, editCryptoProject, edit, state }) => {
+const CryptoProjectForm = ({
+  addCryptoProject,
+  editCryptoProject,
+  edit,
+  state,
+}) => {
   const router = useRouter()
 
   console.log(state.cryptoProjectsReducers.currentCryptoProject)
@@ -14,10 +19,18 @@ const CryptoProjectForm = ({ addCryptoProject, editCryptoProject, edit, state })
     <ConnectFormWrapper>
       <Formik
         initialValues={{
-          name: edit ? state.cryptoProjectsReducers.currentCryptoProject?.name : '',
-          token: edit ? state.cryptoProjectsReducers.currentCryptoProject?.token : '',
-          description: edit ? state.cryptoProjectsReducers.currentCryptoProject?.description : '',
-          websiteLink: edit ? state.cryptoProjectsReducers.currentCryptoProject?.websiteLink : '',
+          name: edit
+            ? state.cryptoProjectsReducers.currentCryptoProject?.name
+            : '',
+          token: edit
+            ? state.cryptoProjectsReducers.currentCryptoProject?.token
+            : '',
+          description: edit
+            ? state.cryptoProjectsReducers.currentCryptoProject?.description
+            : '',
+          websiteLink: edit
+            ? state.cryptoProjectsReducers.currentCryptoProject?.websiteLink
+            : '',
         }}
         // validationSchema={Yup.object({
         //   email: Yup.string()
@@ -29,12 +42,17 @@ const CryptoProjectForm = ({ addCryptoProject, editCryptoProject, edit, state })
         // })}
         onSubmit={async (values, actions) => {
           try {
-            if(edit) {
-              await editCryptoProject(values, state.cryptoProjectsReducers.currentCryptoProject?.id)
-              router.push(`/crypto/${state.cryptoProjectsReducers.currentCryptoProject?.id}`)
+            if (edit) {
+              await editCryptoProject(
+                values,
+                state.cryptoProjectsReducers.currentCryptoProject?.id
+              )
+              router.push(
+                `/crypto/${state.cryptoProjectsReducers.currentCryptoProject?.id}`
+              )
             } else {
               await addCryptoProject(values)
-              router.push('/crypto')
+              router.push('/cryptos')
             }
           } catch (error) {
             console.log(error)

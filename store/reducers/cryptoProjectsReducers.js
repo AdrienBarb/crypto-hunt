@@ -11,7 +11,7 @@ export const cryptoProjectsReducers = (state = initialState, action) => {
     case actions.SET_CRYPTO_PROJECTS:
       return {
         ...state,
-        cryptoProjects: [...state.cryptoProjects, action.payload],
+        cryptoProjects: action.payload,
       }
     case actions.SET_CURRENT_CRYPTO_PROJECT:
       return {
