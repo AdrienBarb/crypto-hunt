@@ -22,7 +22,7 @@ const Navigation = ({ state }) => {
         </div>
 
         <div className="connection-link">
-          {state.usersReducer.currentUser ? (
+          {state.usersReducers.currentUser ? (
             <div className="connect-button" onClick={signOutHandler}>
               Se déconnecter
             </div>

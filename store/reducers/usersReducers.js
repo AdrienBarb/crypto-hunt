@@ -7,7 +7,7 @@ const initialState = {
   users: [],
 }
 
-export const usersReducer = (state = initialState, action) => {
+export const usersReducers = (state = initialState, action) => {
   switch (action.type) {
     case actions.SET_CURRENT_USER:
       return {
