@@ -13,8 +13,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background: black;
-        color: white;
+        background: white;
+        color: black;
         overflow-x: hidden;
         font-family: 'Rubik';
     }

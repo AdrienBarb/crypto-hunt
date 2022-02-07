@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { StyledCryptoCard } from '../styles/StyledCryptoCard'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { AiOutlineHeart } from 'react-icons/ai'
+import { AiFillHeart } from 'react-icons/ai'
 
 const CryptoProjectCard = ({
   data,
@@ -12,11 +14,6 @@ const CryptoProjectCard = ({
   checkIfVoted,
 }) => {
   const router = useRouter()
-  const [canVote, setCanVote] = useState(false)
-
-  useEffect(() => {
-    console.log('HOOOOOOOO', checkIfVoted(data.id))
-  }, [])
 
   const navToCryptoProject = (id) => {
     router.push(`crypto/${id}`)
@@ -25,15 +22,20 @@ const CryptoProjectCard = ({
   return (
     <StyledCryptoCard>
       <div className="vote-buttons-wrapper">
-        <div onClick={() => voteUpForCryptoProject(data.id)}>UP</div>
-        <div onClick={() => voteDownForCryptoProject(data.id)}>DOWN</div>
+        <div onClick={() => voteUpForCryptoProject(data.id)}>
+          <AiOutlineHeart size={22} />
+        </div>
+        {data.votesCounter}
       </div>
 
       <div
         className="project-details-wrapper"
         onClick={() => navToCryptoProject(data.id)}
       >
-        {data.name}
+        <h1>
+          {data.name} ({data.token})
+        </h1>
+        <p>{data.description}</p>
       </div>
     </StyledCryptoCard>
   )

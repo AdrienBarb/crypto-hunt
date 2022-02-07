@@ -46,7 +46,8 @@ export const addCryptoProject = (cryptoProjectValues) => async (dispatch) => {
       websiteLink: cryptoProjectValues.websiteLink
         ? cryptoProjectValues.websiteLink
         : null,
-      vote: 0,
+      votesCounter: 0,
+      voters: [],
     }
     const collectionRef = collection(db, 'cryptoProject')
     await addDoc(collectionRef, cryptoProjectData)

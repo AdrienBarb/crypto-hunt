@@ -6,7 +6,12 @@ export const StyledCryptoCard = styled.div`
   background-color: white;
   color: black;
   position: relative;
-  height: 200px;
+  padding: 1rem;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 
   .project-details-wrapper {
     width: 100%;
@@ -16,6 +21,10 @@ export const StyledCryptoCard = styled.div`
   .vote-buttons-wrapper {
     position: absolute;
     z-index: 1000;
-    right: 0;
+    right: 2rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
   }
 `
