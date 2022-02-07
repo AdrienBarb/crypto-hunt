@@ -11,6 +11,7 @@ import {
   getDocs,
 } from '@firebase/firestore'
 import { db } from '../../firebase/clientApp'
+import { SET_SNACKBAR } from './snackBarsActions'
 
 export const SET_CRYPTO_PROJECTS = 'SET_CRYPTO_PROJECTS'
 export const SET_CURRENT_CRYPTO_PROJECT = 'SET_CURRENT_CRYPTO_PROJECT'
@@ -40,7 +41,9 @@ export const addCryptoProject = (cryptoProjectValues) => async (dispatch) => {
   try {
     const cryptoProjectData = {
       name: cryptoProjectValues.name ? cryptoProjectValues.name : null,
-      token: cryptoProjectValues.token ? cryptoProjectValues.token : null,
+      token: cryptoProjectValues.token
+        ? cryptoProjectValues.token.toUpperCase()
+        : null,
       description: cryptoProjectValues.description
         ? cryptoProjectValues.description
         : null,
@@ -61,7 +64,9 @@ export const editCryptoProject = (cryptoProjectValues, id) => async (
   try {
     const cryptoProjectData = {
       name: cryptoProjectValues.name ? cryptoProjectValues.name : null,
-      token: cryptoProjectValues.token ? cryptoProjectValues.token : null,
+      token: cryptoProjectValues.token
+        ? cryptoProjectValues.token.toUpperCase()
+        : null,
       description: cryptoProjectValues.description
         ? cryptoProjectValues.description
         : null,
@@ -129,9 +134,9 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
 
     console.log('Je cherche ..', value)
 
-    const q = query(collectionRef, where('token', '==', value))
+    const q = query(collectionRef, where('token', '==', value.toUpperCase()))
 
-    await onSnapshot(q, (querySnapshot) => {
+    const projects = await onSnapshot(q, (querySnapshot) => {
       dispatch({
         type: SET_EXISTING_CRYPTO_PROJECTS,
         payload: querySnapshot.docs.map((doc) => ({
@@ -139,6 +144,19 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
           id: doc.id,
         })),
       })
+
+      if (querySnapshot.docs.length > 0) {
+        dispatch({
+          type: SET_SNACKBAR,
+          payload: {
+            type: 'error',
+            textMessage: 'Ce projet existe déjà',
+            isOpen: true,
+          },
+        })
+      }
+
+      console.log('Query', querySnapshot.docs)
     })
   } catch (error) {
     console.log(error)

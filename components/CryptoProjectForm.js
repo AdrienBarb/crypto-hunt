@@ -14,8 +14,6 @@ const CryptoProjectForm = ({
 }) => {
   const router = useRouter()
 
-  console.log(state.cryptoProjectsReducers)
-
   return (
     <ConnectFormWrapper>
       <Formik

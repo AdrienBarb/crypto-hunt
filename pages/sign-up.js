@@ -2,7 +2,7 @@
 import React from 'react'
 
 import EmailPasswordAuthSignUp from '../components/EmailPasswordAuthSignUp'
-import Layout from '../components/Layout'
+import Layout from '../connects/Layout'
 import { ConnectScreen } from '../styles/StyledConnectScreen'
 
 function SignUp() {

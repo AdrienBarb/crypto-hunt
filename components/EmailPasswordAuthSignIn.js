@@ -29,6 +29,7 @@ const EmailPasswordAuthLogin = () => {
               values.email,
               values.password
             )
+
             Router.push(`${Router.query.path ? Router.query.path : '/'}`)
           } catch (error) {
             console.log('error')

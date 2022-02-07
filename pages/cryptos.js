@@ -1,6 +1,6 @@
 import React from 'react'
 import HeaderProjectList from '../connects/HeaderProjectList'
-import Layout from '../components/Layout'
+import Layout from '../connects/Layout'
 import { ScreenContainer } from '../styles/StyledScreenContainer'
 import ProjectsList from '../connects/ProjectsList'
 
