@@ -30,7 +30,7 @@ const EmailPasswordAuthSignUp = () => {
               values.email,
               values.password
             )
-            Router.push('/')
+            Router.push(`${Router.query.path ? Router.query.path : '/'}`)
           } catch (error) {
             alert(error)
           }
@@ -71,7 +71,9 @@ const EmailPasswordAuthSignUp = () => {
 
       <div className="create-account">
         Déjà un compte ?
-        <Link href="/sign-in">
+        <Link
+          href={{ pathname: '/sign-in', query: { path: Router.query.path } }}
+        >
           <div className="navigation-link">Connecte toi!</div>
         </Link>
       </div>

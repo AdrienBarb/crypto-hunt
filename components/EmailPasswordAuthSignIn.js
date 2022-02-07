@@ -10,6 +10,8 @@ import { ConnectFormWrapper } from '../styles/StyledConnectForm'
 const EmailPasswordAuthLogin = () => {
   const Router = useRouter()
 
+  console.log('QUERY', Router.query.path)
+
   return (
     <ConnectFormWrapper>
       <Formik
@@ -29,7 +31,7 @@ const EmailPasswordAuthLogin = () => {
               values.email,
               values.password
             )
-            Router.push('/')
+            Router.push(`${Router.query.path ? Router.query.path : '/'}`)
           } catch (error) {
             console.log('error')
             alert(error)
@@ -71,7 +73,9 @@ const EmailPasswordAuthLogin = () => {
 
       <div className="create-account">
         Pas encore de compte ?
-        <Link href="/sign-up">
+        <Link
+          href={{ pathname: '/sign-up', query: { path: Router.query.path } }}
+        >
           <div className="navigation-link">Créez en un!</div>
         </Link>
       </div>
