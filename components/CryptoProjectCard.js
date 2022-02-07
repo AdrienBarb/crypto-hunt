@@ -2,8 +2,6 @@ import React from 'react'
 
 import { useRouter } from 'next/router'
 import { StyledCryptoCard } from '../styles/StyledCryptoCard'
-import { useEffect } from 'react'
-import { useState } from 'react'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { AiFillHeart } from 'react-icons/ai'
 
@@ -12,7 +10,6 @@ const CryptoProjectCard = ({
   data,
   voteUpForCryptoProject,
   voteDownForCryptoProject,
-  checkIfVoted,
 }) => {
   const router = useRouter()
 
@@ -20,23 +17,34 @@ const CryptoProjectCard = ({
     router.push(`crypto/${id}`)
   }
 
-  console.log(data.voters.includes(state.usersReducers.currentUser.uid))
+  const voteUp = (id) => {
+
+    if(state.usersReducers.currentUser) {
+      voteUpForCryptoProject(id)
+    } else {
+      router.push({
+        pathname: '/sign-in',
+        query: { path: router.pathname },
+    })
+    }
+  }
+
+  const voteDown = (id) => {
+    voteDownForCryptoProject(id)
+  }
+  
 
   return (
     <StyledCryptoCard>
       <div className="vote-buttons-wrapper">
         {data.voters.includes(state.usersReducers.currentUser.uid) ? (
-
-<div onClick={() => voteDownForCryptoProject(data.id)}>
-<AiFillHeart size={22} color="red" />
-</div>
+          <div onClick={() => voteDown(data.id)}>
+          <AiFillHeart size={22} color="red" />
+          </div>
         ) : (
-
-
-          <div onClick={() => voteUpForCryptoProject(data.id)}>
+          <div onClick={() => voteUp(data.id)}>
             <AiOutlineHeart size={22} />
           </div>
-
         )}
         {data.votesCounter}
       </div>

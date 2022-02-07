@@ -2,8 +2,7 @@ import { connect } from 'react-redux'
 import CryptoProjectCard from '../components/CryptoProjectCard'
 import {
   voteUpForCryptoProject,
-  voteDownForCryptoProject,
-  checkIfVoted,
+  voteDownForCryptoProject
 } from '../store/actions/cryptoProjectsActions'
 
 const mapStatetoProps = (state) => ({
@@ -16,9 +15,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   voteDownForCryptoProject: (id) => {
     dispatch(voteDownForCryptoProject(id))
-  },
-  checkIfVoted: (id) => {
-    dispatch(checkIfVoted(id))
   },
 })
 
