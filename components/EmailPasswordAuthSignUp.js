@@ -23,7 +23,6 @@ const EmailPasswordAuthSignUp = () => {
             .required('Veuillez renseigner le mot de passe.'),
         })}
         onSubmit={async (values, actions) => {
-          console.log('coucou')
           try {
             await createUserWithEmailAndPassword(
               auth,

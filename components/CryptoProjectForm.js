@@ -10,10 +10,11 @@ const CryptoProjectForm = ({
   editCryptoProject,
   edit,
   state,
+  checkIfProjectExist,
 }) => {
   const router = useRouter()
 
-  console.log(state.cryptoProjectsReducers.currentCryptoProject)
+  console.log(state.cryptoProjectsReducers)
 
   return (
     <ConnectFormWrapper>
@@ -76,11 +77,12 @@ const CryptoProjectForm = ({
             </div>
             <div className="input-wrapper">
               <Field
+                {...formik.getFieldProps('token')}
                 id="token"
                 label="Token"
                 fullWidth={true}
                 placeholder="Token"
-                {...formik.getFieldProps('token')}
+                onBlur={(e) => checkIfProjectExist(e.target.value)}
               />
               <ErrorMessage name="token" />
             </div>

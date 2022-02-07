@@ -14,6 +14,7 @@ import { db } from '../../firebase/clientApp'
 
 export const SET_CRYPTO_PROJECTS = 'SET_CRYPTO_PROJECTS'
 export const SET_CURRENT_CRYPTO_PROJECT = 'SET_CURRENT_CRYPTO_PROJECT'
+export const SET_EXISTING_CRYPTO_PROJECTS = 'SET_EXISTING_CRYPTO_PROJECTS'
 
 export const getCryptoProjects = () => async (dispatch) => {
   try {
@@ -100,7 +101,6 @@ export const voteUpForCryptoProject = (id) => async (dispatch, getState) => {
       votesCounter: docSnap.data().votesCounter + 1,
       voters: [...docSnap.data().voters, currentUser.uid],
     })
-
   } catch (error) {
     console.log(error)
   }
@@ -114,10 +114,33 @@ export const voteDownForCryptoProject = (id) => async (dispatch, getState) => {
 
     await updateDoc(docRef, {
       ...docSnap.data(),
-      votesCounter: docSnap.data().votesCounter == 0 ? 0 : docSnap.data().votesCounter - 1,
-      voters: [...docSnap.data().voters.filter((voter) => voter !== currentUser.uid)]
+      votesCounter:
+        docSnap.data().votesCounter == 0 ? 0 : docSnap.data().votesCounter - 1,
+      voters: [
+        ...docSnap.data().voters.filter((voter) => voter !== currentUser.uid),
+      ],
     })
-
   } catch (error) {}
 }
 
+export const checkIfProjectExist = (value) => async (dispatch) => {
+  try {
+    const collectionRef = collection(db, 'cryptoProject')
+
+    console.log('Je cherche ..', value)
+
+    const q = query(collectionRef, where('token', '==', value))
+
+    await onSnapshot(q, (querySnapshot) => {
+      dispatch({
+        type: SET_EXISTING_CRYPTO_PROJECTS,
+        payload: querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        })),
+      })
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}

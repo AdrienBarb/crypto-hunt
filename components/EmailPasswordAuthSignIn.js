@@ -10,8 +10,6 @@ import { ConnectFormWrapper } from '../styles/StyledConnectForm'
 const EmailPasswordAuthLogin = () => {
   const Router = useRouter()
 
-  console.log('QUERY', Router.query.path)
-
   return (
     <ConnectFormWrapper>
       <Formik

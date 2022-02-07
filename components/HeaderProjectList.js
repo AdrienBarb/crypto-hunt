@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 
 const HeaderProjectList = ({ state }) => {
   const router = useRouter()
-  console.log(router)
   return (
     <Link
       href={

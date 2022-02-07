@@ -8,8 +8,6 @@ const ProjectsList = ({ getCryptoProjects, state }) => {
     return unsubscribe
   }, [])
 
-  console.log(state)
-
   return (
     <div>
       {state.cryptoProjectsReducers.cryptoProjects.map((cryptoProject) => {

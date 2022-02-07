@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 import CryptoProjectForm from '../components/CryptoProjectForm'
-import { addCryptoProject, editCryptoProject } from '../store/actions/cryptoProjectsActions'
+import {
+  addCryptoProject,
+  editCryptoProject,
+  checkIfProjectExist,
+} from '../store/actions/cryptoProjectsActions'
 
 const mapStatetoProps = (state) => ({
   state,
@@ -12,6 +16,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   editCryptoProject: (cryptoProjectValues, id) => {
     dispatch(editCryptoProject(cryptoProjectValues, id))
+  },
+  checkIfProjectExist: (value) => {
+    dispatch(checkIfProjectExist(value))
   },
 })
 

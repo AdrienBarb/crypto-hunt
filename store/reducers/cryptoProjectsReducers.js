@@ -3,6 +3,7 @@ import * as actions from '../actions/cryptoProjectsActions'
 const initialState = {
   currentCryptoProject: null,
   cryptoProjects: [],
+  existingCryptoProject: null,
   loading: false,
 }
 
@@ -17,6 +18,11 @@ export const cryptoProjectsReducers = (state = initialState, action) => {
       return {
         ...state,
         currentCryptoProject: action.payload,
+      }
+    case actions.SET_EXISTING_CRYPTO_PROJECTS:
+      return {
+        ...state,
+        existingCryptoProject: action.payload,
       }
     default:
       return state
