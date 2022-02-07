@@ -19,7 +19,7 @@ export const getCryptoProjects = () => async (dispatch) => {
   try {
     const collectionRef = collection(db, 'cryptoProject')
 
-    const q = query(collectionRef, orderBy('vote', 'desc'))
+    const q = query(collectionRef, orderBy('votesCounter', 'desc'))
 
     await onSnapshot(q, (querySnapshot) => {
       dispatch({
@@ -97,14 +97,10 @@ export const voteUpForCryptoProject = (id) => async (dispatch, getState) => {
 
     await updateDoc(docRef, {
       ...docSnap.data(),
-      vote: docSnap.data().vote + 1,
+      votesCounter: docSnap.data().votesCounter + 1,
+      voters: [...docSnap.data().voters, currentUser.uid],
     })
 
-    const collectionRef = collection(db, 'votes')
-    await addDoc(collectionRef, {
-      projectId: id,
-      userId: currentUser.uid,
-    })
   } catch (error) {
     console.log(error)
   }
@@ -118,33 +114,10 @@ export const voteDownForCryptoProject = (id) => async (dispatch, getState) => {
 
     await updateDoc(docRef, {
       ...docSnap.data(),
-      vote: docSnap.data().vote - 1,
+      votesCounter: docSnap.data().votesCounter == 0 ? 0 : docSnap.data().votesCounter - 1,
+      voters: [...docSnap.data().voters.filter((voter) => voter !== currentUser.uid)]
     })
 
-    const collectionRef = collection(db, 'votes')
-    await addDoc(collectionRef, {
-      projectId: id,
-      userId: currentUser.uid,
-    })
   } catch (error) {}
 }
 
-export const checkIfVoted = (id) => async (dispatch, getState) => {
-  const currentUser = getState().usersReducers.currentUser
-
-  try {
-    const collectionRef = collection(db, 'votes')
-
-    const q = query(
-      collectionRef,
-      where('projectId', '==', id),
-      where('userId', '==', currentUser.uid)
-    )
-
-    const votes = await getDocs(q)
-
-    return votes.docs.length > 0
-  } catch (error) {
-    console.log(error)
-  }
-}

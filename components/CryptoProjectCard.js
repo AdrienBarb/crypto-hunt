@@ -8,6 +8,7 @@ import { AiOutlineHeart } from 'react-icons/ai'
 import { AiFillHeart } from 'react-icons/ai'
 
 const CryptoProjectCard = ({
+  state,
   data,
   voteUpForCryptoProject,
   voteDownForCryptoProject,
@@ -19,12 +20,24 @@ const CryptoProjectCard = ({
     router.push(`crypto/${id}`)
   }
 
+  console.log(data.voters.includes(state.usersReducers.currentUser.uid))
+
   return (
     <StyledCryptoCard>
       <div className="vote-buttons-wrapper">
-        <div onClick={() => voteUpForCryptoProject(data.id)}>
-          <AiOutlineHeart size={22} />
-        </div>
+        {data.voters.includes(state.usersReducers.currentUser.uid) ? (
+
+<div onClick={() => voteDownForCryptoProject(data.id)}>
+<AiFillHeart size={22} color="red" />
+</div>
+        ) : (
+
+
+          <div onClick={() => voteUpForCryptoProject(data.id)}>
+            <AiOutlineHeart size={22} />
+          </div>
+
+        )}
         {data.votesCounter}
       </div>
 

@@ -9,7 +9,7 @@ import store from '../store/index'
 import CurrentUser from '../connects/CurrentUser'
 
 export default function MyApp({ Component, pageProps }) {
-  console.log('hello')
+
   return (
     <Provider store={store}>
       <CurrentUser />
