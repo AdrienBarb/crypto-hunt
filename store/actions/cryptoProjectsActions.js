@@ -134,28 +134,26 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
 
     const q = query(collectionRef, where('token', '==', value.toUpperCase()))
 
-    const projects = await onSnapshot(q, (querySnapshot) => {
-      dispatch({
-        type: SET_EXISTING_CRYPTO_PROJECTS,
-        payload: querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        })),
-      })
+    const querySnapshot = await getDocs(q)
 
-      if (querySnapshot.docs.length > 0) {
-        dispatch({
-          type: SET_SNACKBAR,
-          payload: {
-            type: 'error',
-            textMessage: 'Ce projet existe déjà',
-            isOpen: true,
-          },
-        })
-      }
-
-      console.log('Query', querySnapshot.docs)
+    dispatch({
+      type: SET_EXISTING_CRYPTO_PROJECTS,
+      payload: querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      })),
     })
+
+    if (querySnapshot.docs.length > 0) {
+      dispatch({
+        type: SET_SNACKBAR,
+        payload: {
+          type: 'error',
+          textMessage: 'Ce projet existe déjà',
+          isOpen: true,
+        },
+      })
+    }
   } catch (error) {
     console.log(error)
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import Layout from '../../components/Layout'
+import Layout from '../../connects/Layout'
 import { ScreenContainer } from '../../styles/StyledScreenContainer'
 import CryptoProjectDetails from '../../connects/CryptoProjectDetails'
 import Link from 'next/link'

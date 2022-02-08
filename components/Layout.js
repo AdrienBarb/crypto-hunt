@@ -2,11 +2,9 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyle, StyledLayout } from '../styles/globalStyles'
 import Header from './Header'
-
-import Button from '@mui/material/Button'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
-import { useEffect } from 'react'
+
 
 const lightTheme = {
   background: '#F2ECDE',
@@ -19,7 +17,10 @@ const Layout = ({ children, state, closeSnackbar }) => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
   })
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
     closeSnackbar()
   }
 

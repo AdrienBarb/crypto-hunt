@@ -3,7 +3,7 @@ import * as actions from '../actions/cryptoProjectsActions'
 const initialState = {
   currentCryptoProject: null,
   cryptoProjects: [],
-  existingCryptoProject: null,
+  existingCryptoProject: [],
   loading: false,
 }
 

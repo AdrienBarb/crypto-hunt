@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
@@ -14,22 +14,62 @@ const CryptoProjectForm = ({
 }) => {
   const router = useRouter()
 
+  const [formValues, setFormValues] = useState({
+    name: edit ? state.cryptoProjectsReducers.currentCryptoProject?.name : '',
+    token: edit ? state.cryptoProjectsReducers.currentCryptoProject?.token : '',
+    description: edit
+      ? state.cryptoProjectsReducers.currentCryptoProject?.description
+      : '',
+    websiteLink: edit
+      ? state.cryptoProjectsReducers.currentCryptoProject?.websiteLink
+      : '',
+  })
+
+  const handleTokenValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      token: value.target.value,
+    })
+  }
+
+  const handleNameValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      name: value.target.value,
+    })
+  }
+  const handleDescriptionValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      description: value.target.value,
+    })
+  }
+  const handleWebsiteLinkValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      websiteLink: value.target.value,
+    })
+  }
+
+  useEffect(() => {
+    if (state.cryptoProjectsReducers.existingCryptoProject.length) {
+      setFormValues({
+        ...formValues,
+        token: '',
+      })
+    }
+  }, [state.cryptoProjectsReducers.existingCryptoProject])
+
+  console.log(formValues)
+
   return (
     <ConnectFormWrapper>
       <Formik
         initialValues={{
-          name: edit
-            ? state.cryptoProjectsReducers.currentCryptoProject?.name
-            : '',
-          token: edit
-            ? state.cryptoProjectsReducers.currentCryptoProject?.token
-            : '',
-          description: edit
-            ? state.cryptoProjectsReducers.currentCryptoProject?.description
-            : '',
-          websiteLink: edit
-            ? state.cryptoProjectsReducers.currentCryptoProject?.websiteLink
-            : '',
+          name: formValues.name,
+          token: formValues.token,
+          description: formValues.description,
+          websiteLink: formValues.websiteLink,
         }}
         // validationSchema={Yup.object({
         //   email: Yup.string()
@@ -50,7 +90,7 @@ const CryptoProjectForm = ({
                 `/crypto/${state.cryptoProjectsReducers.currentCryptoProject?.id}`
               )
             } else {
-              await addCryptoProject(values)
+              await addCryptoProject(formValues)
               router.push('/cryptos')
             }
           } catch (error) {
@@ -65,11 +105,13 @@ const CryptoProjectForm = ({
             </div>
             <div className="input-wrapper">
               <Field
+                {...formik.getFieldProps('name')}
                 id="name"
                 label="Nom du projet"
+                value={formValues.name}
+                onChange={handleNameValueChange}
                 fullWidth={true}
                 placeholder="Nom du projet"
-                {...formik.getFieldProps('name')}
               />
               <ErrorMessage name="name" />
             </div>
@@ -78,29 +120,37 @@ const CryptoProjectForm = ({
                 {...formik.getFieldProps('token')}
                 id="token"
                 label="Token"
+                value={formValues.token}
+                onChange={handleTokenValueChange}
                 fullWidth={true}
                 placeholder="Token"
-                onBlur={(e) => checkIfProjectExist(e.target.value)}
+                onBlur={(e) => {
+                  checkIfProjectExist(e.target.value)
+                }}
               />
               <ErrorMessage name="token" />
             </div>
             <div className="input-wrapper">
               <Field
+                {...formik.getFieldProps('description')}
                 id="description"
                 label="Description"
+                value={formValues.description}
+                onChange={handleDescriptionValueChange}
                 fullWidth={true}
                 placeholder="Description"
-                {...formik.getFieldProps('description')}
               />
               <ErrorMessage name="description" />
             </div>
             <div className="input-wrapper">
               <Field
+                {...formik.getFieldProps('websiteLink')}
                 id="websiteLink"
                 label="Lien du site internet"
+                value={formValues.websiteLink}
+                onChange={handleWebsiteLinkValueChange}
                 fullWidth={true}
                 placeholder="Lien du site internet"
-                {...formik.getFieldProps('websiteLink')}
               />
               <ErrorMessage name="websiteLink" />
             </div>
