@@ -1,12 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
 import { NavigationWrapper } from '../styles/StyledNavigation'
-import { auth } from '../firebase/clientApp'
-import { signOut } from 'firebase/auth'
 
-const Navigation = ({ state }) => {
+const Navigation = ({ state, logout }) => {
   const signOutHandler = async () => {
-    await signOut(auth)
+    await logout()
   }
 
   return (

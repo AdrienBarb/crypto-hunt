@@ -1,5 +1,5 @@
 import React from 'react'
-import EmailPasswordAuthLogin from '../components/EmailPasswordAuthSignIn'
+import EmailPasswordAuthLogin from '../connects/EmailPasswordAuthLogin'
 import Layout from '../connects/Layout'
 import { ConnectScreen } from '../styles/StyledConnectScreen'
 

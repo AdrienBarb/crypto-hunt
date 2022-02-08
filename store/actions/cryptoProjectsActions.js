@@ -132,8 +132,6 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
   try {
     const collectionRef = collection(db, 'cryptoProject')
 
-    console.log('Je cherche ..', value)
-
     const q = query(collectionRef, where('token', '==', value.toUpperCase()))
 
     const projects = await onSnapshot(q, (querySnapshot) => {

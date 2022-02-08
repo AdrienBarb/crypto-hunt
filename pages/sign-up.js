@@ -1,7 +1,7 @@
 // auth.tsx
 import React from 'react'
 
-import EmailPasswordAuthSignUp from '../components/EmailPasswordAuthSignUp'
+import EmailPasswordAuthSignUp from '../connects/EmailPasswordAuthSignUp'
 import Layout from '../connects/Layout'
 import { ConnectScreen } from '../styles/StyledConnectScreen'
 

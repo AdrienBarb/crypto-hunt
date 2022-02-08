@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { auth } from '../firebase/clientApp'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { ConnectFormWrapper } from '../styles/StyledConnectForm'
 import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import Link from 'next/link'
 
-const EmailPasswordAuthSignUp = () => {
+const EmailPasswordAuthSignUp = ({ signUp }) => {
   const Router = useRouter()
 
   return (
@@ -24,11 +22,7 @@ const EmailPasswordAuthSignUp = () => {
         })}
         onSubmit={async (values, actions) => {
           try {
-            await createUserWithEmailAndPassword(
-              auth,
-              values.email,
-              values.password
-            )
+            await signUp(values)
             Router.push(`${Router.query.path ? Router.query.path : '/'}`)
           } catch (error) {
             alert(error)

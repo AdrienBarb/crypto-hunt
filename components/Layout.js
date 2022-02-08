@@ -14,24 +14,13 @@ const lightTheme = {
   gray: '#595E5F',
 }
 
-const Layout = ({ children, state }) => {
+const Layout = ({ children, state, closeSnackbar }) => {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
   })
-  const [open, setOpen] = React.useState(false)
 
-  useEffect(() => {
-    if (state.snackBarsReducers.isOpen) {
-      setOpen(true)
-    }
-  }, [state.snackBarsReducers.isOpen])
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpen(false)
+  const handleClose = () => {
+    closeSnackbar()
   }
 
   return (
@@ -39,7 +28,11 @@ const Layout = ({ children, state }) => {
       <GlobalStyle />
       <Header />
       <StyledLayout>{children}</StyledLayout>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar
+        open={state.snackBarsReducers.isOpen}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
         <Alert
           onClose={handleClose}
           severity={state.snackBarsReducers.type}
