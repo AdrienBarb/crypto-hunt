@@ -40,6 +40,8 @@ const CryptoProjectForm = ({
     : "",
   });
 
+console.log(state)
+
   const handleTokenValueChange = (value) => {
     setFormValues({
       ...formValues,
@@ -178,7 +180,11 @@ const CryptoProjectForm = ({
                 onChange={handleTokenValueChange}
                 fullWidth={true}
                 placeholder="Token"
+                disabled={edit}
                 onBlur={async (e) => {
+                  if(edit) {
+                    return
+                  }
                   await checkIfProjectExist(e.target.value);
                   await getProjectDetails(e.target.value)
                 }}
@@ -239,31 +245,36 @@ const CryptoProjectForm = ({
               <ErrorMessage name="twitterLink" />
             </div>
 
-            <div className="input-wrapper">
-              <Field
-                {...formik.getFieldProps("networkOwnerRewards")}
-                id="networkOwnerRewards"
-                label="Rewards networks"
-                value={formValues.networkOwnerRewards}
-                onChange={handleNetworkOwnerRewardsValueChange}
-                fullWidth={true}
-                placeholder="Rewards networks"
-              />
-              <ErrorMessage name="networkOwnerRewards" />
-            </div>
+            {state.usersReducers.currentUser.uid == state.cryptoProjectsReducers.currentCryptoProject.projectOwner &&
+              <>
+                <div className="input-wrapper">
+                  <Field
+                    {...formik.getFieldProps("networkOwnerRewards")}
+                    id="networkOwnerRewards"
+                    label="Rewards networks"
+                    value={formValues.networkOwnerRewards}
+                    onChange={handleNetworkOwnerRewardsValueChange}
+                    fullWidth={true}
+                    placeholder="Rewards networks"
+                  />
+                  <ErrorMessage name="networkOwnerRewards" />
+                </div>
+                <div className="input-wrapper">
+                  <Field
+                    {...formik.getFieldProps("addressOwnerRewards")}
+                    id="addressOwnerRewards"
+                    label="Rewards networks"
+                    value={formValues.addressOwnerRewards}
+                    onChange={handleAddressOwnerRewardsValueChange}
+                    fullWidth={true}
+                    placeholder="Rewards address"
+                  />
+                  <ErrorMessage name="addressOwnerRewards" />
+                </div>
+              </>
+            }
 
-            <div className="input-wrapper">
-              <Field
-                {...formik.getFieldProps("addressOwnerRewards")}
-                id="addressOwnerRewards"
-                label="Rewards networks"
-                value={formValues.addressOwnerRewards}
-                onChange={handleAddressOwnerRewardsValueChange}
-                fullWidth={true}
-                placeholder="Rewards address"
-              />
-              <ErrorMessage name="addressOwnerRewards" />
-            </div>
+
             <button type="submit">Valider</button>
           </form>
         )}
