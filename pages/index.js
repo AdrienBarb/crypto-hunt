@@ -5,7 +5,7 @@ import Layout from '../connects/Layout'
 export default function Home() {
   return (
     <Layout>
-      <div>Partagez et découvrez les meilleurs projet crypto</div>
+      <div>FIND. SHARE. INVEST.</div>
     </Layout>
   )
 }

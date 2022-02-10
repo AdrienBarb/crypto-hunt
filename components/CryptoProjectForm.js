@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ConnectFormWrapper } from "../styles/StyledConnectForm";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { createGlobalStyle } from "styled-components";
 
 const CryptoProjectForm = ({
   addCryptoProject,
@@ -12,6 +13,7 @@ const CryptoProjectForm = ({
   edit,
   state,
   checkIfProjectExist,
+  getProjectDetails
 }) => {
   const router = useRouter();
 
@@ -24,6 +26,18 @@ const CryptoProjectForm = ({
     websiteLink: edit
       ? state.cryptoProjectsReducers.currentCryptoProject?.websiteLink
       : "",
+    whitePaperLink: edit
+    ? state.cryptoProjectsReducers.currentCryptoProject?.whitePaperLink
+    : "",
+    twitterLink: edit
+    ? state.cryptoProjectsReducers.currentCryptoProject?.twitterLink
+    : "",
+    networkOwnerRewards: edit
+    ? state.cryptoProjectsReducers.currentCryptoProject?.networkOwnerRewards
+    : "",
+    addressOwnerRewards: edit
+    ? state.cryptoProjectsReducers.currentCryptoProject?.addressOwnerRewards
+    : "",
   });
 
   const handleTokenValueChange = (value) => {
@@ -51,6 +65,32 @@ const CryptoProjectForm = ({
       websiteLink: value.target.value,
     });
   };
+  const handleWhitePaperLinkValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      whitePaperLink: value.target.value,
+    });
+  };
+  const handleTwitterLinkValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      twitterLink: value.target.value,
+    });
+  };
+
+  const handleNetworkOwnerRewardsValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      networkOwnerRewards: value.target.value,
+    });
+  };
+  const handleAddressOwnerRewardsValueChange = (value) => {
+    setFormValues({
+      ...formValues,
+      addressOwnerRewards: value.target.value,
+    });
+  };
+
 
   useEffect(() => {
     if (state.cryptoProjectsReducers.existingCryptoProject.length) {
@@ -61,7 +101,18 @@ const CryptoProjectForm = ({
     }
   }, [state.cryptoProjectsReducers.existingCryptoProject]);
 
-  console.log(formValues);
+
+  useEffect(() => {
+    if (state.cryptoProjectsReducers.findedCryptoDetails) {
+      setFormValues({
+        ...formValues,
+        description: state.cryptoProjectsReducers.findedCryptoDetails?.[formValues.token.toUpperCase()]?.description ? state.cryptoProjectsReducers.findedCryptoDetails[formValues.token.toUpperCase()].description : '',
+        websiteLink: state.cryptoProjectsReducers.findedCryptoDetails?.[formValues.token.toUpperCase()]?.urls?.website.length ? state.cryptoProjectsReducers.findedCryptoDetails?.[formValues.token.toUpperCase()]?.urls?.website[0] : '',
+        whitePaperLink: state.cryptoProjectsReducers.findedCryptoDetails?.[formValues.token.toUpperCase()]?.urls?.technical_doc.length ? state.cryptoProjectsReducers.findedCryptoDetails?.[formValues.token.toUpperCase()]?.urls?.technical_doc[0] : '',
+        twitterLink: state.cryptoProjectsReducers.findedCryptoDetails?.[formValues.token.toUpperCase()]?.urls?.twitter.length ? state.cryptoProjectsReducers.findedCryptoDetails?.[formValues.token.toUpperCase()]?.urls?.twitter[0] : '',
+      });
+    }
+  }, [state.cryptoProjectsReducers.findedCryptoDetails]);
 
   return (
     <ConnectFormWrapper>
@@ -71,14 +122,16 @@ const CryptoProjectForm = ({
           token: formValues.token,
           description: formValues.description,
           websiteLink: formValues.websiteLink,
+          whitePaperLink: formValues.whitePaperLink,
+          twitterLink: formValues.twitterLink,
+          networkOwnerRewards: formValues.networkOwnerRewards,
+          addressOwnerRewards: formValues.addressOwnerRewards
         }}
         // validationSchema={Yup.object({
-        //   email: Yup.string()
-        //     .email("Votre adresse email n'est pas valide")
-        //     .required("Veuillez renseigner l'email."),
-        //   password: Yup.string()
-        //     .min(8, 'Votre mot de passe doit faire minimum 8 caractères.')
-        //     .required('Veuillez renseigner le mot de passe.'),
+        //   name: Yup.string()
+        //     .required("Veuillez renseigner le nom du token."),
+        //     token: Yup.string()
+        //     .required('Veuillez renseigner le token.'),
         // })}
         onSubmit={async (values, actions) => {
           try {
@@ -125,24 +178,15 @@ const CryptoProjectForm = ({
                 onChange={handleTokenValueChange}
                 fullWidth={true}
                 placeholder="Token"
-                onBlur={(e) => {
-                  checkIfProjectExist(e.target.value);
-                  axios
-                    .get(`/api/test-crypto`, {
-                      headers: {
-                        Accept: "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                      },
-                    })
-                    .then((response) => {
-                      console.log("responseee", response);
-                    })
-
-                    .catch((err) => console.log(err));
+                onBlur={async (e) => {
+                  await checkIfProjectExist(e.target.value);
+                  await getProjectDetails(e.target.value)
                 }}
               />
               <ErrorMessage name="token" />
             </div>
+
+
             <div className="input-wrapper">
               <Field
                 {...formik.getFieldProps("description")}
@@ -168,6 +212,58 @@ const CryptoProjectForm = ({
               <ErrorMessage name="websiteLink" />
             </div>
 
+
+
+            <div className="input-wrapper">
+              <Field
+                {...formik.getFieldProps("whitePaperLink")}
+                id="whitePaperLink"
+                label="Lien du white paper"
+                value={formValues.whitePaperLink}
+                onChange={handleWhitePaperLinkValueChange}
+                fullWidth={true}
+                placeholder="Lien du white paper"
+              />
+              <ErrorMessage name="whitePaperLink" />
+            </div>
+            <div className="input-wrapper">
+              <Field
+                {...formik.getFieldProps("twitterLink")}
+                id="twitterLink"
+                label="Lien twitter"
+                value={formValues.twitterLink}
+                onChange={handleTwitterLinkValueChange}
+                fullWidth={true}
+                placeholder="Lien twitter"
+              />
+              <ErrorMessage name="twitterLink" />
+            </div>
+
+            <div className="input-wrapper">
+              <Field
+                {...formik.getFieldProps("networkOwnerRewards")}
+                id="networkOwnerRewards"
+                label="Rewards networks"
+                value={formValues.networkOwnerRewards}
+                onChange={handleNetworkOwnerRewardsValueChange}
+                fullWidth={true}
+                placeholder="Rewards networks"
+              />
+              <ErrorMessage name="networkOwnerRewards" />
+            </div>
+
+            <div className="input-wrapper">
+              <Field
+                {...formik.getFieldProps("addressOwnerRewards")}
+                id="addressOwnerRewards"
+                label="Rewards networks"
+                value={formValues.addressOwnerRewards}
+                onChange={handleAddressOwnerRewardsValueChange}
+                fullWidth={true}
+                placeholder="Rewards address"
+              />
+              <ErrorMessage name="addressOwnerRewards" />
+            </div>
             <button type="submit">Valider</button>
           </form>
         )}

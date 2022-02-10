@@ -4,6 +4,7 @@ import {
   addCryptoProject,
   editCryptoProject,
   checkIfProjectExist,
+  getProjectDetails
 } from '../store/actions/cryptoProjectsActions'
 
 const mapStatetoProps = (state) => ({
@@ -19,6 +20,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   checkIfProjectExist: (value) => {
     dispatch(checkIfProjectExist(value))
+  },
+  getProjectDetails: (value) => {
+    dispatch(getProjectDetails(value))
   },
 })
 

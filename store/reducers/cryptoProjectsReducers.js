@@ -4,6 +4,8 @@ const initialState = {
   currentCryptoProject: null,
   cryptoProjects: [],
   existingCryptoProject: [],
+  haveFindCryptoDetails: false,
+  findedCryptoDetails: null,
   loading: false,
 }
 
@@ -23,6 +25,12 @@ export const cryptoProjectsReducers = (state = initialState, action) => {
       return {
         ...state,
         existingCryptoProject: action.payload,
+      }
+    case actions.SET_FINDED_CRYPTO_DETAILS:
+      return {
+        ...state,
+        haveFindCryptoDetails: true,
+        findedCryptoDetails: action.payload,
       }
     default:
       return state

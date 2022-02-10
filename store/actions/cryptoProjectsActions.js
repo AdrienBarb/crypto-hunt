@@ -11,11 +11,13 @@ import {
   getDocs,
 } from '@firebase/firestore'
 import { db } from '../../firebase/clientApp'
+import axios from 'axios'
 import { SET_SNACKBAR } from './snackBarsActions'
 
 export const SET_CRYPTO_PROJECTS = 'SET_CRYPTO_PROJECTS'
 export const SET_CURRENT_CRYPTO_PROJECT = 'SET_CURRENT_CRYPTO_PROJECT'
 export const SET_EXISTING_CRYPTO_PROJECTS = 'SET_EXISTING_CRYPTO_PROJECTS'
+export const SET_FINDED_CRYPTO_DETAILS = 'SET_FINDED_CRYPTO_DETAILS'
 
 export const getCryptoProjects = () => async (dispatch) => {
   try {
@@ -37,7 +39,8 @@ export const getCryptoProjects = () => async (dispatch) => {
   }
 }
 
-export const addCryptoProject = (cryptoProjectValues) => async (dispatch) => {
+export const addCryptoProject = (cryptoProjectValues) => async (dispatch, getState) => {
+  const currentUser = getState().usersReducers.currentUser
   try {
     const cryptoProjectData = {
       name: cryptoProjectValues.name ? cryptoProjectValues.name : null,
@@ -52,6 +55,19 @@ export const addCryptoProject = (cryptoProjectValues) => async (dispatch) => {
         : null,
       votesCounter: 0,
       voters: [],
+      whitePaperLink: cryptoProjectValues.whitePaperLink
+      ? cryptoProjectValues.whitePaperLink
+      : null,
+      twitterLink: cryptoProjectValues.twitterLink
+      ? cryptoProjectValues.twitterLink
+      : null,
+      networkOwnerRewards: cryptoProjectValues.networkOwnerRewards
+      ? cryptoProjectValues.networkOwnerRewards
+      : null,
+      addressOwnerRewards: cryptoProjectValues.addressOwnerRewards
+      ? cryptoProjectValues.addressOwnerRewards
+      : null,
+      projectOwner: currentUser.uid
     }
     const collectionRef = collection(db, 'cryptoProject')
     await addDoc(collectionRef, cryptoProjectData)
@@ -72,6 +88,18 @@ export const editCryptoProject = (cryptoProjectValues, id) => async (
         : null,
       websiteLink: cryptoProjectValues.websiteLink
         ? cryptoProjectValues.websiteLink
+        : null,
+      whitePaperLink: cryptoProjectValues.whitePaperLink
+        ? cryptoProjectValues.whitePaperLink
+        : null,
+      twitterLink: cryptoProjectValues.twitterLink
+        ? cryptoProjectValues.twitterLink
+        : null,
+      networkOwnerRewards: cryptoProjectValues.networkOwnerRewards
+        ? cryptoProjectValues.networkOwnerRewards
+        : null,
+      addressOwnerRewards: cryptoProjectValues.addressOwnerRewards
+        ? cryptoProjectValues.addressOwnerRewards
         : null,
     }
 
@@ -153,6 +181,29 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
           isOpen: true,
         },
       })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getProjectDetails = (value) => async (dispatch) => {
+  try {
+    if(value) {
+      axios.get(`/api/crypto-details?token=${value}`, {
+        headers: {
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((response) => {
+        console.log(response)
+        dispatch({
+          type: SET_FINDED_CRYPTO_DETAILS,
+          payload: response.data.data.data
+        })
+      })
+      .catch((err) => console.log(err));
     }
   } catch (error) {
     console.log(error)
