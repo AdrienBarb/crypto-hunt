@@ -73,6 +73,10 @@ export const addCryptoProject =
       };
       const collectionRef = collection(db, "cryptoProject");
       await addDoc(collectionRef, cryptoProjectData);
+
+      if (cryptoProjectValues.tags.length) {
+        createTags(cryptoProjectValues.tags);
+      }
     } catch (error) {}
   };
 
@@ -210,4 +214,15 @@ export const getProjectDetails = (value) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const createTags = (tagsList) => {
+  tagsList.forEach(async (tag) => {
+    const collectionRef = collection(db, "tags");
+    const q = await query(collectionRef, where("name", "==", tag));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.docs.length == 0) {
+      await addDoc(collectionRef, { name: tag });
+    }
+  });
 };

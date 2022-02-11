@@ -14,6 +14,8 @@ const CryptoProjectForm = ({
 }) => {
   const router = useRouter();
 
+  console.log(state);
+
   const [formValues, setFormValues] = useState({
     name: edit ? state.cryptoProjectsReducers.currentCryptoProject?.name : "",
     token: edit ? state.cryptoProjectsReducers.currentCryptoProject?.token : "",
@@ -51,6 +53,20 @@ const CryptoProjectForm = ({
     if (state.cryptoProjectsReducers.findedCryptoDetails) {
       setFormValues({
         ...formValues,
+        name: state.cryptoProjectsReducers.findedCryptoDetails?.[
+          Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
+        ]?.name
+          ? state.cryptoProjectsReducers.findedCryptoDetails[
+              Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
+            ].name
+          : "",
+        token: state.cryptoProjectsReducers.findedCryptoDetails?.[
+          Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
+        ]?.symbol
+          ? state.cryptoProjectsReducers.findedCryptoDetails[
+              Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
+            ].symbol
+          : "",
         description: state.cryptoProjectsReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
         ]?.description
@@ -100,7 +116,6 @@ const CryptoProjectForm = ({
           token: Yup.string().required("Veuillez renseigner le token."),
         })}
         onSubmit={async (values, actions) => {
-          console.log("Values on submit ", values);
           try {
             if (edit) {
               await editCryptoProject(
@@ -124,13 +139,10 @@ const CryptoProjectForm = ({
             <div className="form-title">
               {edit ? "Modifier un projet" : "Ajouter un nouveau projet"}
             </div>
-            {console.log(formik.errors)}
             <div className="input-wrapper">
               <Field
                 id="name"
                 label="Nom du projet"
-                // value={formValues.name}
-                // onChange={handleNameValueChange}
                 fullWidth={true}
                 placeholder="Nom du projet"
                 {...formik.getFieldProps("name")}
@@ -139,17 +151,19 @@ const CryptoProjectForm = ({
             </div>
             <div className="input-wrapper">
               <Field
-                {...formik.getFieldProps("token")}
                 id="token"
                 label="Token"
-                // value={formValues.token}
-                // onChange={handleTokenValueChange}
                 fullWidth={true}
                 placeholder="Token"
                 disabled={edit}
+                {...formik.getFieldProps("token")}
                 onBlur={async (e) => {
                   if (edit) {
                     return;
+                  }
+
+                  if (formik.errors.token) {
+                    formik.setFieldError("token", formik.errors.token);
                   }
                   await checkIfProjectExist(e.target.value);
                   await getProjectDetails(e.target.value);
@@ -163,8 +177,6 @@ const CryptoProjectForm = ({
                 {...formik.getFieldProps("description")}
                 id="description"
                 label="Description"
-                // value={formValues.description}
-                // onChange={handleDescriptionValueChange}
                 fullWidth={true}
                 placeholder="Description"
               />
@@ -175,8 +187,6 @@ const CryptoProjectForm = ({
                 {...formik.getFieldProps("websiteLink")}
                 id="websiteLink"
                 label="Lien du site internet"
-                // value={formValues.websiteLink}
-                // onChange={handleWebsiteLinkValueChange}
                 fullWidth={true}
                 placeholder="Lien du site internet"
               />
@@ -188,8 +198,6 @@ const CryptoProjectForm = ({
                 {...formik.getFieldProps("whitePaperLink")}
                 id="whitePaperLink"
                 label="Lien du white paper"
-                // value={formValues.whitePaperLink}
-                // onChange={handleWhitePaperLinkValueChange}
                 fullWidth={true}
                 placeholder="Lien du white paper"
               />
@@ -200,8 +208,6 @@ const CryptoProjectForm = ({
                 {...formik.getFieldProps("twitterLink")}
                 id="twitterLink"
                 label="Lien twitter"
-                // value={formValues.twitterLink}
-                // onChange={handleTwitterLinkValueChange}
                 fullWidth={true}
                 placeholder="Lien twitter"
               />
@@ -218,8 +224,6 @@ const CryptoProjectForm = ({
                     {...formik.getFieldProps("networkOwnerRewards")}
                     id="networkOwnerRewards"
                     label="Rewards networks"
-                    // value={formValues.networkOwnerRewards}
-                    // onChange={handleNetworkOwnerRewardsValueChange}
                     fullWidth={true}
                     placeholder="Rewards networks"
                   />
@@ -230,8 +234,6 @@ const CryptoProjectForm = ({
                     {...formik.getFieldProps("addressOwnerRewards")}
                     id="addressOwnerRewards"
                     label="Rewards networks"
-                    // value={formValues.addressOwnerRewards}
-                    // onChange={handleAddressOwnerRewardsValueChange}
                     fullWidth={true}
                     placeholder="Rewards address"
                   />
