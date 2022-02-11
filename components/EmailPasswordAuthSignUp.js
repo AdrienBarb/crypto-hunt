@@ -1,31 +1,32 @@
-import React, { useCallback } from 'react'
-import { useRouter } from 'next/router'
-import { ConnectFormWrapper } from '../styles/StyledConnectForm'
-import { Formik, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
-import Link from 'next/link'
+import React, { useCallback } from "react";
+import { useRouter } from "next/router";
+import { ConnectFormWrapper } from "../styles/StyledConnectForm";
+import { Formik, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import Link from "next/link";
 
 const EmailPasswordAuthSignUp = ({ signUp }) => {
-  const Router = useRouter()
+  const Router = useRouter();
 
   return (
     <ConnectFormWrapper>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{ surname: "", email: "", password: "" }}
         validationSchema={Yup.object({
+          surname: Yup.string().required("Veuillez renseigner surname."),
           email: Yup.string()
             .email("Votre adresse email n'est pas valide")
             .required("Veuillez renseigner l'email."),
           password: Yup.string()
-            .min(8, 'Votre mot de passe doit faire minimum 8 caractères.')
-            .required('Veuillez renseigner le mot de passe.'),
+            .min(8, "Votre mot de passe doit faire minimum 8 caractères.")
+            .required("Veuillez renseigner le mot de passe."),
         })}
         onSubmit={async (values, actions) => {
           try {
-            await signUp(values)
-            Router.push(`${Router.query.path ? Router.query.path : '/'}`)
+            await signUp(values);
+            Router.push(`${Router.query.path ? Router.query.path : "/"}`);
           } catch (error) {
-            alert(error)
+            alert(error);
           }
         }}
       >
@@ -34,13 +35,25 @@ const EmailPasswordAuthSignUp = ({ signUp }) => {
             <div className="form-title">Créez un compte</div>
             <div className="input-wrapper">
               <Field
+                id="surname"
+                type="surname"
+                label="Surnom"
+                fullWidth={true}
+                variant="outlined"
+                placeHolder="Surnom"
+                {...formik.getFieldProps("surname")}
+              />
+              <ErrorMessage name="surname" />
+            </div>
+            <div className="input-wrapper">
+              <Field
                 id="email"
                 type="email"
                 label="Email"
                 fullWidth={true}
                 variant="outlined"
                 placeHolder="Email"
-                {...formik.getFieldProps('email')}
+                {...formik.getFieldProps("email")}
               />
               <ErrorMessage name="email" />
             </div>
@@ -52,7 +65,7 @@ const EmailPasswordAuthSignUp = ({ signUp }) => {
                 fullWidth={true}
                 variant="outlined"
                 placeHolder="Mot de passe"
-                {...formik.getFieldProps('password')}
+                {...formik.getFieldProps("password")}
               />
               <ErrorMessage name="password" />
             </div>
@@ -65,13 +78,13 @@ const EmailPasswordAuthSignUp = ({ signUp }) => {
       <div className="create-account">
         Déjà un compte ?
         <Link
-          href={{ pathname: '/sign-in', query: { path: Router.query.path } }}
+          href={{ pathname: "/sign-in", query: { path: Router.query.path } }}
         >
           <div className="navigation-link">Connecte toi!</div>
         </Link>
       </div>
     </ConnectFormWrapper>
-  )
-}
+  );
+};
 
-export default EmailPasswordAuthSignUp
+export default EmailPasswordAuthSignUp;
