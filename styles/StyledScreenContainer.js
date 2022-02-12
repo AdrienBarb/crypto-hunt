@@ -3,8 +3,8 @@ import styled from 'styled-components'
 export const ScreenContainer = styled.div`
   margin: 6rem auto 0 auto;
   max-width: 1400px;
-  width: 100%;
-  flex: 1;
+  box-sizing: border-box;
+  padding: 0 1rem;
 `
 
 export const CenterContainer = styled.div`
