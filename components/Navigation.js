@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { NavigationWrapper } from '../styles/StyledNavigation'
+import { LinkButton } from '../styles/StyledButton'
 
 const Navigation = ({ state, logout }) => {
   const signOutHandler = async () => {
@@ -12,25 +13,23 @@ const Navigation = ({ state, logout }) => {
       <div className="navigation-container">
         <div className="navigations-links">
           <Link href="/">
-            <div className="navigation-link">Home</div>
+            <LinkButton>Home</LinkButton>
           </Link>
           <Link href="/cryptos">
-            <div className="navigation-link">Crypto</div>
+            <LinkButton>Crypto</LinkButton>
           </Link>
         </div>
 
         <div className="connection-link">
           {state.usersReducers.currentUser ? (
-            <div className="connect-button" onClick={signOutHandler}>
-              Se déconnecter
-            </div>
+            <LinkButton onClick={signOutHandler}>Log out</LinkButton>
           ) : (
             <>
               <Link href="/sign-in">
-                <div className="connect-button">Se connecter</div>
+                <LinkButton>Sign in</LinkButton>
               </Link>
               <Link href="/sign-up">
-                <div className="connect-button">S'enregistrer</div>
+                <LinkButton>Sign up</LinkButton>
               </Link>
             </>
           )}
