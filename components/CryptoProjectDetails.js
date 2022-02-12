@@ -1,5 +1,11 @@
 import React from 'react'
 import { useEffect } from 'react'
+import Link from 'next/link'
+import { CardButton } from '../styles/StyledButton'
+import { StyledText } from '../styles/StyledText'
+import { StyledCryptoProjectDetails } from '../styles/StyledCryptoProjectDetails'
+import { HorizontalDivider } from '../styles/StyledDivider'
+import Colors from '../constants/Colors'
 
 const CryptoProjectDetails = ({
   projectId,
@@ -11,11 +17,26 @@ const CryptoProjectDetails = ({
     return unsubscribe
   }, [])
   return (
-    <div>
+    <StyledCryptoProjectDetails>
+      <div className="header">
+
       {state.cryptoProjectsReducers.currentCryptoProject && (
-        <div> {state.cryptoProjectsReducers.currentCryptoProject.name} </div>
+        <StyledText h1 bold karla>
+          {state.cryptoProjectsReducers.currentCryptoProject.name}
+        </StyledText>
       )}
-    </div>
+
+      <Link href="/edit-crypto-project">
+        <CardButton>
+          <StyledText link h4 regular>
+            EDIT PROJECTS
+          </StyledText>
+        </CardButton>
+      </Link>
+
+      </div>
+      <HorizontalDivider color={Colors.yellow} width="100%" />
+    </StyledCryptoProjectDetails>
   )
 }
 

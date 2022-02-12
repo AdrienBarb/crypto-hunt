@@ -23,7 +23,7 @@ const HeaderProjectList = ({ state }) => {
           }
         >
           <CardButton>
-            <StyledText h4 regular>
+            <StyledText link h4 regular>
               ADD PROJECTS
             </StyledText>
           </CardButton>

@@ -5,6 +5,7 @@ export const HorizontalDivider = styled.div`
   background-color: ${(props) => props.color};
   height: 2px;
   margin: 2rem 0;
+  opacity: ${(props) => props.opacity};
 `
 
 export const VerticalDivider = styled.div`

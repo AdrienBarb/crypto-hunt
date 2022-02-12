@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const StyledText = styled.div`
   color: ${(props) => props.color};
   font-family: ${(props) => (props.karla ? 'Karla' : 'Space Mono')};
+  text-align: ${(props) => (props.center ? 'center' : 'start')};
   font-size: ${(props) =>
     props.h1
       ? '62px'
@@ -12,6 +13,8 @@ export const StyledText = styled.div`
       ? '22px'
       : props.h4
       ? '18px'
+      : props.h5
+      ? '12px'
       : '14px'};
 
   font-weight: ${(props) =>
