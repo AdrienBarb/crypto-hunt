@@ -2,8 +2,6 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { normalize } from 'styled-normalize'
 
 export const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700;800&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 
 

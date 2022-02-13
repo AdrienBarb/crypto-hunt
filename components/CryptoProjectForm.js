@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Formik, Field, ErrorMessage } from 'formik'
+import { Formik, Field, ErrorMessage, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { ConnectFormWrapper } from '../styles/StyledConnectForm'
 import { useRouter } from 'next/router'
@@ -44,7 +44,6 @@ const CryptoProjectForm = ({
   })
 
   useEffect(() => {
-    console.log('Ce projet exist')
     if (state.cryptoProjectsReducers.existingCryptoProject.length > 0) {
       setFormValues({
         ...formValues,
@@ -53,8 +52,6 @@ const CryptoProjectForm = ({
       })
     }
   }, [state.cryptoProjectsReducers.existingCryptoProject])
-
-  console.log(formValues)
 
   useEffect(() => {
     if (state.cryptoProjectsReducers.findedCryptoDetails) {
@@ -83,32 +80,34 @@ const CryptoProjectForm = ({
           : '',
         websiteLink: state.cryptoProjectsReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
-        ]?.urls?.website.length
+        ]?.urls?.website?.length
           ? state.cryptoProjectsReducers.findedCryptoDetails?.[
               Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
             ]?.urls?.website[0]
           : '',
         whitePaperLink: state.cryptoProjectsReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
-        ]?.urls?.technical_doc.length
+        ]?.urls?.technical_doc?.length
           ? state.cryptoProjectsReducers.findedCryptoDetails?.[
               Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
             ]?.urls?.technical_doc[0]
           : '',
         twitterLink: state.cryptoProjectsReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
-        ]?.urls?.twitter.length
+        ]?.urls?.twitter?.length
           ? state.cryptoProjectsReducers.findedCryptoDetails?.[
               Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
             ]?.urls?.twitter[0]
           : '',
         tags: state.cryptoProjectsReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
-        ]?.tags.length
+        ]?.tags?.length
           ? state.cryptoProjectsReducers.findedCryptoDetails?.[
               Object.keys(state.cryptoProjectsReducers.findedCryptoDetails)[0]
             ]?.tags
           : [],
+        networkOwnerRewards: '',
+        addressOwnerRewards: '',
       })
     }
   }, [state.cryptoProjectsReducers.findedCryptoDetails])
@@ -133,7 +132,7 @@ const CryptoProjectForm = ({
                 `/crypto/${state.cryptoProjectsReducers.currentCryptoProject?.id}`
               )
             } else {
-              await addCryptoProject(formValues)
+              await addCryptoProject(values)
               router.push('/cryptos')
             }
           } catch (error) {
@@ -149,22 +148,6 @@ const CryptoProjectForm = ({
 
             <HorizontalMargin m1 />
 
-            <div className="input-wrapper">
-              <StyledText h5 mono regular color="black">
-                PROJECT NAME
-              </StyledText>
-              <Field
-                className="text-input"
-                id="name"
-                label="Nom du projet"
-                fullWidth={true}
-                placeholder="Ex: Ethereum"
-                {...formik.getFieldProps('name')}
-              />
-              <StyledText color="red">
-                <ErrorMessage name="name" />
-              </StyledText>
-            </div>
             <div className="input-wrapper">
               <StyledText h5 mono regular>
                 TOKEN
@@ -187,6 +170,22 @@ const CryptoProjectForm = ({
               />
               <StyledText color="red">
                 <ErrorMessage name="token" />
+              </StyledText>
+            </div>
+            <div className="input-wrapper">
+              <StyledText h5 mono regular color="black">
+                PROJECT NAME
+              </StyledText>
+              <Field
+                className="text-input"
+                id="name"
+                label="Nom du projet"
+                fullWidth={true}
+                placeholder="Ex: Ethereum"
+                {...formik.getFieldProps('name')}
+              />
+              <StyledText color="red">
+                <ErrorMessage name="name" />
               </StyledText>
             </div>
 
@@ -259,6 +258,22 @@ const CryptoProjectForm = ({
                 <ErrorMessage name="twitterLink" />
               </StyledText>
             </div>
+            <div className="input-wrapper">
+              <StyledText h5 mono regular>
+                TWITTER LINK
+              </StyledText>
+              <Field
+                {...formik.getFieldProps('test')}
+                id="test"
+                label="Lien twitter"
+                className="text-input"
+                fullWidth={true}
+                placeholder="Ex: https://twitter.com/ethereum"
+              />
+              <StyledText color="red">
+                <ErrorMessage name="test" />
+              </StyledText>
+            </div>
 
             {(!edit ||
               state.usersReducers.currentUser.uid ==
@@ -292,12 +307,12 @@ const CryptoProjectForm = ({
                     YOUR REWARDS ADRESS
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps('addressOwnerRewards')}
                     className="text-input"
                     id="addressOwnerRewards"
                     label="Rewards networks"
                     fullWidth={true}
                     placeholder="Ex: 0xaCe0A5bf0cf2a01c2c90A8F7je275430e1684a9"
+                    {...formik.getFieldProps('addressOwnerRewards')}
                   />
                   <StyledText color="red">
                     <ErrorMessage name="addressOwnerRewards" />

@@ -9,9 +9,21 @@ export const StyledCryptoCard = styled.div`
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
+  .top-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .bottom-card {
+    background-color: #dfe0e2;
+    zidth: 100%;
+    border-radius: 6px;
+    margin-top: 0.4rem;
+    padding: 0.4rem;
+  }
 
   .project-details-wrapper {
     width: 100%;

@@ -44,6 +44,7 @@ export const addCryptoProject = (cryptoProjectValues) => async (
   getState
 ) => {
   const currentUser = getState().usersReducers.currentUser
+  console.log('values from form', cryptoProjectValues)
   try {
     const cryptoProjectData = {
       name: cryptoProjectValues.name ? cryptoProjectValues.name : null,

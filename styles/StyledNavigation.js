@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const NavigationWrapper = styled.div`
   background-color: black;
   padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 
   .navigation-container {
     max-width: 1400px;

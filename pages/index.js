@@ -13,21 +13,19 @@ import { StyledHomepageScreen } from '../styles/StyledHomepageScreen'
 export default function Home() {
   return (
     <Layout>
-      <ScreenContainer>
-        <StyledHomepageScreen>
-          <StyledText color={Colors.black} h1 bold karla>
-            FIND
-          </StyledText>
-          <VerticalDivider height="20px" color={Colors.yellow} />
-          <StyledText color={Colors.black} h1 bold karla>
-            SHARE
-          </StyledText>
-          <VerticalDivider height="20px" color={Colors.yellow} />
-          <StyledText color={Colors.black} h1 bold karla>
-            INVEST
-          </StyledText>
-        </StyledHomepageScreen>
-      </ScreenContainer>
+      <StyledHomepageScreen>
+        <StyledText color={Colors.black} h1 bold karla>
+          FIND
+        </StyledText>
+        <VerticalDivider height="20px" color={Colors.yellow} />
+        <StyledText color={Colors.black} h1 bold karla>
+          SHARE
+        </StyledText>
+        <VerticalDivider height="20px" color={Colors.yellow} />
+        <StyledText color={Colors.black} h1 bold karla>
+          INVEST
+        </StyledText>
+      </StyledHomepageScreen>
     </Layout>
   )
 }
