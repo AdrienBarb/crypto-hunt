@@ -9,7 +9,7 @@ import Colors from '../constants/Colors'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { GrAdd } from 'react-icons/gr'
 
-const HeaderProjectList = ({ state }) => {
+const HeaderProjectList = ({ state, title, addUrl }) => {
   const router = useRouter()
   const matches = useMediaQuery('(max-width:768px)')
 
@@ -17,12 +17,12 @@ const HeaderProjectList = ({ state }) => {
     <StyledHeaderProjectList>
       <div className="header-top">
         <StyledText h1 bold karla>
-          Cryptocurrencies
+          {title}
         </StyledText>
         <Link
           href={
             state.usersReducers.currentUser
-              ? '/add-crypto-project'
+              ? `${addUrl}`
               : { pathname: '/sign-in', query: { path: router.pathname } }
           }
         >

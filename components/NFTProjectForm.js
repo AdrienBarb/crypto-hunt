@@ -10,113 +10,55 @@ import { HorizontalDivider } from '../styles/StyledDivider'
 import Colors from '../constants/Colors'
 import LoadingSpinner from './LoadingSpinner'
 
-const CryptoProjectForm = ({
-  addCryptoProject,
-  editCryptoProject,
+const NFTProjectForm = ({
+  addNFTProject,
+  editNFTProject,
   edit,
   state,
   checkIfProjectExist,
   cleanReducers,
 }) => {
   const router = useRouter()
-  const [tokenValue, setTokenValue] = useState('')
+  const [projectName, setProjectNameValue] = useState('')
   const [isValidButtonVisible, setIsValidButtonVisible] = useState(false)
 
+  console.log(state.nftFormReducers)
+  console.log('Can be submit ', state.nftFormReducers.formCanBeSubmit)
+
   const [formValues, setFormValues] = useState({
-    name: edit ? state.cryptoProjectsReducers.currentCryptoProject?.name : '',
-    token: edit ? state.cryptoProjectsReducers.currentCryptoProject?.token : '',
+    name: edit ? state.nftProjectsReducers.currentNFTProject?.name : '',
     description: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.description
+      ? state.nftProjectsReducers.currentNFTProject?.description
       : '',
     websiteLink: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.websiteLink
+      ? state.nftProjectsReducers.currentNFTProject?.websiteLink
       : '',
     whitePaperLink: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.whitePaperLink
+      ? state.nftProjectsReducers.currentNFTProject?.whitePaperLink
       : '',
     twitterLink: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.twitterLink
+      ? state.nftProjectsReducers.currentNFTProject?.twitterLink
       : '',
     networkOwnerRewards: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.networkOwnerRewards
+      ? state.nftProjectsReducers.currentNFTProject?.networkOwnerRewards
       : '',
     addressOwnerRewards: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.addressOwnerRewards
+      ? state.nftProjectsReducers.currentNFTProject?.addressOwnerRewards
       : '',
     tags: [],
   })
 
   useEffect(() => {
-    if (state.cryptoFormReducers.existingCryptoProject.length > 0) {
+    if (state.nftFormReducers.existingNFTProject.length > 0) {
       setFormValues({
         ...formValues,
         name: '',
-        token: '',
       })
     }
-  }, [state.cryptoFormReducers.existingCryptoProject])
-
-  useEffect(() => {
-    if (state.cryptoFormReducers.findedCryptoDetails) {
-      setFormValues({
-        ...formValues,
-        name: state.cryptoFormReducers.findedCryptoDetails?.[
-          Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-        ]?.name
-          ? state.cryptoFormReducers.findedCryptoDetails[
-              Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-            ].name
-          : '',
-        token: state.cryptoFormReducers.findedCryptoDetails?.[
-          Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-        ]?.symbol
-          ? state.cryptoFormReducers.findedCryptoDetails[
-              Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-            ].symbol
-          : '',
-        description: state.cryptoFormReducers.findedCryptoDetails?.[
-          Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-        ]?.description
-          ? state.cryptoFormReducers.findedCryptoDetails[
-              Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-            ].description
-          : '',
-        websiteLink: state.cryptoFormReducers.findedCryptoDetails?.[
-          Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-        ]?.urls?.website?.length
-          ? state.cryptoFormReducers.findedCryptoDetails?.[
-              Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-            ]?.urls?.website[0]
-          : '',
-        whitePaperLink: state.cryptoFormReducers.findedCryptoDetails?.[
-          Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-        ]?.urls?.technical_doc?.length
-          ? state.cryptoFormReducers.findedCryptoDetails?.[
-              Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-            ]?.urls?.technical_doc[0]
-          : '',
-        twitterLink: state.cryptoFormReducers.findedCryptoDetails?.[
-          Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-        ]?.urls?.twitter?.length
-          ? state.cryptoFormReducers.findedCryptoDetails?.[
-              Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-            ]?.urls?.twitter[0]
-          : '',
-        tags: state.cryptoFormReducers.findedCryptoDetails?.[
-          Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-        ]?.tags?.length
-          ? state.cryptoFormReducers.findedCryptoDetails?.[
-              Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
-            ]?.tags
-          : [],
-        networkOwnerRewards: '',
-        addressOwnerRewards: '',
-      })
-    }
-  }, [state.cryptoFormReducers.findedCryptoDetails])
+  }, [state.nftFormReducers.existingNFTProject])
 
   const handleCheckIfExist = () => {
-    checkIfProjectExist(tokenValue)
+    checkIfProjectExist(projectName)
     setIsValidButtonVisible(!isValidButtonVisible)
   }
 
@@ -133,21 +75,21 @@ const CryptoProjectForm = ({
         initialValues={formValues}
         validationSchema={Yup.object({
           name: Yup.string().required('Veuillez renseigner le nom du token.'),
-          token: Yup.string().required('Veuillez renseigner le token.'),
         })}
         onSubmit={async (values, actions) => {
+          console.log('Je submiiiiit')
           try {
             if (edit) {
-              await editCryptoProject(
+              await editNFTProject(
                 values,
-                state.cryptoProjectsReducers.currentCryptoProject?.id
+                state.nftProjectsReducers.currentNFTProject?.id
               )
               router.push(
-                `/crypto/${state.cryptoProjectsReducers.currentCryptoProject?.id}`
+                `/nft/${state.nftProjectsReducers.currentNFTProject?.id}`
               )
             } else {
-              await addCryptoProject(values)
-              router.push('/cryptos')
+              await addNFTProject(values)
+              router.push('/nfts')
             }
           } catch (error) {
             console.log(error)
@@ -160,27 +102,27 @@ const CryptoProjectForm = ({
               {edit ? 'Edit the project' : 'Add a new project'}
             </StyledText>
             <HorizontalMargin m1 />
+
             <div className="input-wrapper">
-              <StyledText h5 mono regular>
-                TOKEN
+              <StyledText h5 mono regular color="black">
+                PROJECT NAME
               </StyledText>
               <Field
-                {...formik.getFieldProps('token')}
-                id="token"
+                {...formik.getFieldProps('name')}
                 className="text-input"
-                label="Token"
+                id="name"
+                label="Nom du projet"
                 fullWidth={true}
-                placeholder="Ex: ETH"
-                disabled={edit}
                 onChange={(e) => {
                   formik.handleChange(e)
-                  setTokenValue(e.target.value)
+                  setProjectNameValue(e.target.value)
                   setIsValidButtonVisible(true)
                   cleanReducers()
                 }}
+                placeholder="Ex: Ethereum"
               />
               <StyledText color="red">
-                <ErrorMessage name="token" />
+                <ErrorMessage name="name" />
               </StyledText>
             </div>
 
@@ -195,31 +137,13 @@ const CryptoProjectForm = ({
                     Rechercher
                   </StyledText>
                 </div>
-                {/* <HorizontalMargin m1 /> */}
               </>
             )}
 
-            {state.cryptoFormReducers.loading ? (
+            {state.nftFormReducers.loading ? (
               <LoadingSpinner />
-            ) : edit || state.cryptoFormReducers.formCanBeSubmit ? (
+            ) : edit || state.nftFormReducers.formCanBeSubmit ? (
               <>
-                <div className="input-wrapper">
-                  <StyledText h5 mono regular color="black">
-                    PROJECT NAME
-                  </StyledText>
-                  <Field
-                    className="text-input"
-                    id="name"
-                    label="Nom du projet"
-                    fullWidth={true}
-                    placeholder="Ex: Ethereum"
-                    {...formik.getFieldProps('name')}
-                  />
-                  <StyledText color="red">
-                    <ErrorMessage name="name" />
-                  </StyledText>
-                </div>
-
                 <div className="input-wrapper">
                   <StyledText h5 mono regular>
                     DESCRIPTION
@@ -309,7 +233,7 @@ const CryptoProjectForm = ({
                 {(!edit ||
                   (state.usersReducers.currentUser &&
                     state.usersReducers.currentUser.uid ==
-                      state.cryptoProjectsReducers.currentCryptoProject
+                      state.nftProjectsReducers.currentNFTProject
                         .projectOwner)) && (
                   <>
                     <HorizontalDivider
@@ -375,4 +299,4 @@ const CryptoProjectForm = ({
   )
 }
 
-export default CryptoProjectForm
+export default NFTProjectForm

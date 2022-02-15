@@ -18,6 +18,9 @@ const Navigation = ({ state, logout }) => {
           <Link href="/cryptos">
             <LinkButton>Crypto</LinkButton>
           </Link>
+          <Link href="/nfts">
+            <LinkButton>NFT's</LinkButton>
+          </Link>
         </div>
 
         <div className="connection-link">
