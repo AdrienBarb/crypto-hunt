@@ -30,7 +30,7 @@ const CryptoProjectDetails = ({
         <Link
           href={
             state.usersReducers.currentUser
-              ? '/add-crypto-project'
+              ? '/edit-crypto-project'
               : { pathname: '/sign-in', query: { path: router.pathname } }
           }
         >

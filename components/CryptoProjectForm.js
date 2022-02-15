@@ -276,9 +276,10 @@ const CryptoProjectForm = ({
             </div>
 
             {(!edit ||
-              state.usersReducers.currentUser.uid ==
-                state.cryptoProjectsReducers.currentCryptoProject
-                  .projectOwner) && (
+              (state.usersReducers.currentUser &&
+                state.usersReducers.currentUser.uid ==
+                  state.cryptoProjectsReducers.currentCryptoProject
+                    .projectOwner)) && (
               <>
                 <HorizontalDivider width="100%" color="black" opacity="0.1" />
                 <StyledText karla light>
