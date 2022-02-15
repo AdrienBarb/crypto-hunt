@@ -7,6 +7,7 @@ export const NavigationWrapper = styled.div`
   top: 0;
   left: 0;
   right: 0;
+  z-index: 10000;
 
   .navigation-container {
     max-width: 1400px;

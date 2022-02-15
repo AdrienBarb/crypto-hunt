@@ -19,4 +19,8 @@ export const CardButton = styled.div`
   padding: 0.8rem 1.2rem;
   border-radius: 6px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+  }
 `

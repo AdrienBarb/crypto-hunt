@@ -98,7 +98,7 @@ const EmailPasswordAuthLogin = ({ signIn }) => {
                   query: { path: Router.query.path },
                 }}
               >
-                <StyledText link className="navigation-link">
+                <StyledText link bold className="navigation-link">
                   Create one!
                 </StyledText>
               </Link>

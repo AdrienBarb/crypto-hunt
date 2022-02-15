@@ -50,12 +50,16 @@ export const ConnectFormWrapper = styled.div`
     border-radius: 6px;
     color: white;
     cursor: pointer;
+    width: fit-content;
+    margin: 0 auto;
   }
 
   .create-account {
     color: black;
     display: flex;
     margin-top: 2rem;
+    margin: 0 auto;
+    width: fit-content;
   }
 
   .navigation-link {

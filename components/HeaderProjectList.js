@@ -6,9 +6,13 @@ import { StyledHeaderProjectList } from '../styles/StyledHeaderProjectList'
 import { StyledText } from '../styles/StyledText'
 import { HorizontalDivider } from '../styles/StyledDivider'
 import Colors from '../constants/Colors'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { GrAdd } from 'react-icons/gr'
 
 const HeaderProjectList = ({ state }) => {
   const router = useRouter()
+  const matches = useMediaQuery('(max-width:768px)')
+
   return (
     <StyledHeaderProjectList>
       <div className="header-top">
@@ -23,9 +27,13 @@ const HeaderProjectList = ({ state }) => {
           }
         >
           <CardButton>
-            <StyledText link h4 regular>
-              ADD PROJECTS
-            </StyledText>
+            {matches ? (
+              <GrAdd size={22} />
+            ) : (
+              <StyledText link h4 regular>
+                ADD PROJECTS
+              </StyledText>
+            )}
           </CardButton>
         </Link>
       </div>
