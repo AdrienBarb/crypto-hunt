@@ -71,7 +71,7 @@ const NFTProjectForm = ({
         enableReinitialize={true}
         initialValues={formValues}
         validationSchema={Yup.object({
-          name: Yup.string().required('Veuillez renseigner le nom du token.'),
+          name: Yup.string().required('This field is required.'),
         })}
         onSubmit={async (values, actions) => {
           try {
@@ -95,7 +95,7 @@ const NFTProjectForm = ({
         {(formik) => (
           <form className="form-container" onSubmit={formik.handleSubmit}>
             <StyledText h2 karla regular center>
-              {edit ? 'Edit the project' : 'Add a new project'}
+              {edit ? 'Edit the project' : 'Add a new NFT project'}
             </StyledText>
             <HorizontalMargin m1 />
 
@@ -115,7 +115,7 @@ const NFTProjectForm = ({
                   setIsValidButtonVisible(true)
                   cleanReducers()
                 }}
-                placeholder="Ex: Ethereum"
+                placeholder="Ex: Bored Ape Yacht Club"
               />
               <StyledText color="red">
                 <ErrorMessage name="name" />
@@ -154,7 +154,7 @@ const NFTProjectForm = ({
                     multiline={true}
                     minHeight={100}
                     rows={4}
-                    placeholder="Ethereum (ETH) is a cryptocurrency . Users are able to generate ETH through the process of mining."
+                    placeholder="The Bored Ape Yacht Club is a collection of 10000 unique Bored Ape NFTs"
                   />
                   <StyledText color="red">
                     <ErrorMessage name="description" />
@@ -170,7 +170,7 @@ const NFTProjectForm = ({
                     label="Lien du site internet"
                     className="text-input"
                     fullWidth={true}
-                    placeholder="Ex: https://www.ethereum.org/"
+                    placeholder="Ex: https://boredapeyachtclub.com/"
                   />
                   <StyledText color="red">
                     <ErrorMessage name="websiteLink" />
@@ -187,7 +187,7 @@ const NFTProjectForm = ({
                     className="text-input"
                     label="Lien du white paper"
                     fullWidth={true}
-                    placeholder="Ex : https://github.com/ethereum/wiki/wiki/White-Paper"
+                    placeholder="Ex : https://github.com/bayc/wiki/wiki/White-Paper"
                   />
                   <StyledText color="red">
                     <ErrorMessage name="whitePaperLink" />
@@ -203,26 +203,10 @@ const NFTProjectForm = ({
                     label="Lien twitter"
                     className="text-input"
                     fullWidth={true}
-                    placeholder="Ex: https://twitter.com/ethereum"
+                    placeholder="Ex: https://twitter.com/BoredApeYC"
                   />
                   <StyledText color="red">
                     <ErrorMessage name="twitterLink" />
-                  </StyledText>
-                </div>
-                <div className="input-wrapper">
-                  <StyledText h5 mono regular>
-                    TWITTER LINK
-                  </StyledText>
-                  <Field
-                    {...formik.getFieldProps('test')}
-                    id="test"
-                    label="Lien twitter"
-                    className="text-input"
-                    fullWidth={true}
-                    placeholder="Ex: https://twitter.com/ethereum"
-                  />
-                  <StyledText color="red">
-                    <ErrorMessage name="test" />
                   </StyledText>
                 </div>
 

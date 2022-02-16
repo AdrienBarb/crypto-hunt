@@ -132,8 +132,8 @@ const CryptoProjectForm = ({
         enableReinitialize={true}
         initialValues={formValues}
         validationSchema={Yup.object({
-          name: Yup.string().required('Veuillez renseigner le nom du token.'),
-          token: Yup.string().required('Veuillez renseigner le token.'),
+          name: Yup.string().required('This field is required.'),
+          token: Yup.string().required('This field is required.'),
         })}
         onSubmit={async (values, actions) => {
           try {
@@ -157,7 +157,7 @@ const CryptoProjectForm = ({
         {(formik) => (
           <form className="form-container" onSubmit={formik.handleSubmit}>
             <StyledText h2 karla regular center>
-              {edit ? 'Edit the project' : 'Add a new project'}
+              {edit ? 'Edit the project' : 'Add a new Crypto project'}
             </StyledText>
             <HorizontalMargin m1 />
             <div className="input-wrapper">
