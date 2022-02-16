@@ -1,18 +1,19 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import Layout from '../connects/Layout'
-import Colors from '../constants/Colors'
-import { HorizontalDivider, VerticalDivider } from '../styles/StyledDivider'
+import Head from "next/head";
+import Link from "next/link";
+import Layout from "../connects/Layout";
+import Colors from "../constants/Colors";
+import { HorizontalDivider, VerticalDivider } from "../styles/StyledDivider";
 import {
   CenterContainer,
   ScreenContainer,
-} from '../styles/StyledScreenContainer'
-import { StyledText } from '../styles/StyledText'
-import { StyledHomepageScreen } from '../styles/StyledHomepageScreen'
-import useMediaQuery from '@mui/material/useMediaQuery'
+} from "../styles/StyledScreenContainer";
+import { StyledText } from "../styles/StyledText";
+import { StyledHomepageScreen } from "../styles/StyledHomepageScreen";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Home() {
-  const matches = useMediaQuery('(max-width:768px)')
+  console.log("Hello");
+  const matches = useMediaQuery("(max-width:768px)");
   return (
     <Layout>
       <StyledHomepageScreen>
@@ -37,5 +38,5 @@ export default function Home() {
         </StyledText>
       </StyledHomepageScreen>
     </Layout>
-  )
+  );
 }
