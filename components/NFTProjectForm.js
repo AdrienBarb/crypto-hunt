@@ -22,9 +22,6 @@ const NFTProjectForm = ({
   const [projectName, setProjectNameValue] = useState('')
   const [isValidButtonVisible, setIsValidButtonVisible] = useState(false)
 
-  console.log(state.nftFormReducers)
-  console.log('Can be submit ', state.nftFormReducers.formCanBeSubmit)
-
   const [formValues, setFormValues] = useState({
     name: edit ? state.nftProjectsReducers.currentNFTProject?.name : '',
     description: edit
@@ -77,7 +74,6 @@ const NFTProjectForm = ({
           name: Yup.string().required('Veuillez renseigner le nom du token.'),
         })}
         onSubmit={async (values, actions) => {
-          console.log('Je submiiiiit')
           try {
             if (edit) {
               await editNFTProject(

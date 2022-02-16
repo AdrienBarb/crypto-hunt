@@ -19,8 +19,6 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
     const q = query(collectionRef, where('name', '==', value))
     const querySnapshot = await getDocs(q)
 
-    console.log('Query for ', value)
-
     dispatch({
       type: SET_EXISTING_NFT_PROJECTS,
       payload: querySnapshot.docs.map((doc) => ({
@@ -28,8 +26,6 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
         id: doc.id,
       })),
     })
-
-    console.log('RESULT ', querySnapshot.docs)
 
     if (querySnapshot.docs.length > 0) {
       dispatch({

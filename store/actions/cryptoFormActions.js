@@ -59,10 +59,6 @@ export const checkIfProjectExist = (value) => async (dispatch) => {
             },
           }
         );
-
-        console.log("Return of request ", cryptoDetails);
-
-        console.log("je passsse ", cryptoDetails.data.data.data);
         dispatch({
           type: SET_FINDED_CRYPTO_DETAILS,
           payload: cryptoDetails.data.data.data,

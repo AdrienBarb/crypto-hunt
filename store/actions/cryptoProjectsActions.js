@@ -42,7 +42,6 @@ export const getCryptoProjects = () => async (dispatch) => {
 export const addCryptoProject =
   (cryptoProjectValues) => async (dispatch, getState) => {
     const currentUser = getState().usersReducers.currentUser;
-    console.log("values from form", cryptoProjectValues);
     try {
       const cryptoProjectData = {
         name: cryptoProjectValues.name ? cryptoProjectValues.name : null,
@@ -161,53 +160,6 @@ export const voteDownForCryptoProject = (id) => async (dispatch, getState) => {
     });
   } catch (error) {}
 };
-
-// export const checkIfProjectExist = (value) => async (dispatch) => {
-//   try {
-//     const collectionRef = collection(db, 'cryptoProject')
-
-//     const q = query(collectionRef, where('token', '==', value.toUpperCase()))
-
-//     const querySnapshot = await getDocs(q)
-
-//     dispatch({
-//       type: SET_EXISTING_CRYPTO_PROJECTS,
-//       payload: querySnapshot.docs.map((doc) => ({
-//         ...doc.data(),
-//         id: doc.id,
-//       })),
-//     })
-
-//     if (querySnapshot.docs.length > 0) {
-//       dispatch({
-//         type: SET_SNACKBAR,
-//         payload: {
-//           type: 'error',
-//           textMessage: 'Ce projet existe déjà',
-//           isOpen: true,
-//         },
-//       })
-//     } else {
-//       axios
-//         .get(`/api/crypto-details?token=${value}`, {
-//           headers: {
-//             Accept: 'application/json',
-//             'Access-Control-Allow-Origin': '*',
-//           },
-//         })
-//         .then((response) => {
-//           console.log(response)
-//           dispatch({
-//             type: SET_FINDED_CRYPTO_DETAILS,
-//             payload: response.data.data.data,
-//           })
-//         })
-//         .catch((err) => console.log(err))
-//     }
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 
 export const getProjectDetails = (value) => async (dispatch) => {
   try {

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import CryptoProjectCard from '../components/CryptoProjectCard'
+import NFTProjectCard from '../components/NFTProjectCard'
 import {
   voteUpForCryptoProject,
   voteDownForCryptoProject,
-} from '../store/actions/cryptoProjectsActions'
+} from '../store/actions/nftProjectsActions'
 
 const mapStatetoProps = (state) => ({
   state,
@@ -18,9 +18,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
 })
 
-const CryptoProjectCardContainer = connect(
+const NFTProjectCardContainer = connect(
   mapStatetoProps,
   mapDispatchToProps
-)(CryptoProjectCard)
+)(NFTProjectCard)
 
-export default CryptoProjectCardContainer
+export default NFTProjectCardContainer

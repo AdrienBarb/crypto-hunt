@@ -11,13 +11,12 @@ import {
   getDocs,
 } from '@firebase/firestore'
 import { db } from '../../firebase/clientApp'
-
 export const SET_NFT_PROJECTS = 'SET_NFT_PROJECTS'
 export const SET_CURRENT_NFT_PROJECT = 'SET_CURRENT_NFT_PROJECT'
 
-export const getCryptoProjects = () => async (dispatch) => {
+export const getNFTProjects = () => async (dispatch) => {
   try {
-    const collectionRef = collection(db, 'cryptoProject')
+    const collectionRef = collection(db, 'nftProjects')
 
     const q = query(collectionRef, orderBy('votesCounter', 'desc'))
 
@@ -108,9 +107,9 @@ export const editNFTProject = (nftProjectValues, id) => async (dispatch) => {
   }
 }
 
-export const getCurrentCryptoProject = (id) => async (dispatch) => {
+export const getCurrentNFTProject = (id) => async (dispatch) => {
   try {
-    const docRef = doc(db, 'cryptoProject', id)
+    const docRef = doc(db, 'nftProjects', id)
     const docSnap = await getDoc(docRef)
 
     dispatch({
@@ -124,7 +123,7 @@ export const voteUpForCryptoProject = (id) => async (dispatch, getState) => {
   const currentUser = getState().usersReducers.currentUser
 
   try {
-    const docRef = doc(db, 'cryptoProject', id)
+    const docRef = doc(db, 'nftProjects', id)
     const docSnap = await getDoc(docRef)
 
     await updateDoc(docRef, {
@@ -140,7 +139,7 @@ export const voteUpForCryptoProject = (id) => async (dispatch, getState) => {
 export const voteDownForCryptoProject = (id) => async (dispatch, getState) => {
   const currentUser = getState().usersReducers.currentUser
   try {
-    const docRef = doc(db, 'cryptoProject', id)
+    const docRef = doc(db, 'nftProjects', id)
     const docSnap = await getDoc(docRef)
 
     await updateDoc(docRef, {
