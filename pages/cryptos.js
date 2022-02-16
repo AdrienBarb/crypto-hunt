@@ -8,7 +8,7 @@ const crypto = () => {
   return (
     <Layout>
       <ScreenContainer>
-        <HeaderProjectList />
+        <HeaderProjectList title="Cryptocurrencies" addUrl="/add-crypto-project" />
         <ProjectsList />
       </ScreenContainer>
     </Layout>

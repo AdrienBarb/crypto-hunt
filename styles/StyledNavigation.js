@@ -7,6 +7,7 @@ export const NavigationWrapper = styled.div`
   top: 0;
   left: 0;
   right: 0;
+  z-index: 10000;
 
   .navigation-container {
     max-width: 1400px;
@@ -39,7 +40,7 @@ export const NavigationWrapper = styled.div`
     color: white;
     cursor: pointer;
     padding: 0.2rem;
-    border-radius: 6px;
+    bor kmsanklsadnmmsder-radius: 6px;
     margin-left: 1rem;
     transition: 0.2s all;
 
@@ -49,5 +50,35 @@ export const NavigationWrapper = styled.div`
       background-color: white;
       transition: 0.2s all;
     }
+  }
+
+  .hamburger-menu {
+    z-index: 10000;
+    position: relative;
+  }
+`
+
+export const StyledFullScreenNavigation = styled.div`
+  background-color: black;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .navigations-links {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .connection-link {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `

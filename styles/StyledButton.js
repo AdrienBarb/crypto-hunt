@@ -5,7 +5,6 @@ export const LinkButton = styled.div`
   cursor: pointer;
   padding: 0.2rem;
   border-radius: 6px;
-  margin-left: 1rem;
   transition: 0.2s all;
 
   &:hover {
@@ -19,4 +18,8 @@ export const CardButton = styled.div`
   padding: 0.8rem 1.2rem;
   border-radius: 6px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+  }
 `

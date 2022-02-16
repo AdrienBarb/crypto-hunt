@@ -3,9 +3,7 @@ import * as actions from '../actions/cryptoProjectsActions'
 const initialState = {
   currentCryptoProject: null,
   cryptoProjects: [],
-  existingCryptoProject: [],
-  haveFindCryptoDetails: false,
-  findedCryptoDetails: null,
+  currentCryptoProjectNumbers: null,
   loading: false,
 }
 
@@ -21,17 +19,12 @@ export const cryptoProjectsReducers = (state = initialState, action) => {
         ...state,
         currentCryptoProject: action.payload,
       }
-    case actions.SET_EXISTING_CRYPTO_PROJECTS:
+    case actions.SET_CRYPTO_NUMBERS_DETAILS:
       return {
         ...state,
-        existingCryptoProject: action.payload,
+        currentCryptoProjectNumbers: action.payload,
       }
-    case actions.SET_FINDED_CRYPTO_DETAILS:
-      return {
-        ...state,
-        haveFindCryptoDetails: true,
-        findedCryptoDetails: action.payload,
-      }
+
     default:
       return state
   }

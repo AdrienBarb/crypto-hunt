@@ -37,11 +37,11 @@ export const StyledText = styled.div`
   @media (max-width: 425px) {
     font-size: ${(props) =>
       props.h1
-        ? '32px'
-        : props.h2
         ? '26px'
+        : props.h2
+        ? '22px'
         : props.h3
-        ? '20px'
+        ? '18px'
         : props.h4
         ? '16px'
         : '12px'};

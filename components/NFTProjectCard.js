@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { useRouter } from 'next/router'
 import { StyledCryptoCard } from '../styles/StyledCryptoCard'
 import { AiOutlineHeart } from 'react-icons/ai'
@@ -13,8 +12,9 @@ import Link from 'next/link'
 import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
 import { HorizontalDivider } from '../styles/StyledDivider'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { StyledNFTCard } from '../styles/StyledNFTCard'
 
-const CryptoProjectCard = ({
+const NFTProjectCard = ({
   state,
   data,
   voteUpForCryptoProject,
@@ -24,7 +24,7 @@ const CryptoProjectCard = ({
   const matches = useMediaQuery('(max-width:768px)')
 
   const navToCryptoProject = (id) => {
-    router.push(`crypto/${id}`)
+    router.push(`nft/${id}`)
   }
 
   const voteUp = (id) => {
@@ -42,7 +42,7 @@ const CryptoProjectCard = ({
     voteDownForCryptoProject(id)
   }
   return (
-    <StyledCryptoCard>
+    <StyledNFTCard>
       <div className="top-card">
         <div className="project-details-wrapper">
           <StyledText
@@ -52,7 +52,7 @@ const CryptoProjectCard = ({
             onClick={() => navToCryptoProject(data.id)}
             link
           >
-            {data.name} ({data.token})
+            {data.name}
           </StyledText>
           <StyledText karla className="description">
             {data?.description ? data.description : '-'}
@@ -117,8 +117,8 @@ const CryptoProjectCard = ({
           </div>
         </div>
       )}
-    </StyledCryptoCard>
+    </StyledNFTCard>
   )
 }
 
-export default CryptoProjectCard
+export default NFTProjectCard

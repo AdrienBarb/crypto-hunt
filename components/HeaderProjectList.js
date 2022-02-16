@@ -6,26 +6,34 @@ import { StyledHeaderProjectList } from '../styles/StyledHeaderProjectList'
 import { StyledText } from '../styles/StyledText'
 import { HorizontalDivider } from '../styles/StyledDivider'
 import Colors from '../constants/Colors'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { GrAdd } from 'react-icons/gr'
 
-const HeaderProjectList = ({ state }) => {
+const HeaderProjectList = ({ state, title, addUrl }) => {
   const router = useRouter()
+  const matches = useMediaQuery('(max-width:768px)')
+
   return (
     <StyledHeaderProjectList>
       <div className="header-top">
         <StyledText h1 bold karla>
-          Cryptocurrencies
+          {title}
         </StyledText>
         <Link
           href={
             state.usersReducers.currentUser
-              ? '/add-crypto-project'
+              ? `${addUrl}`
               : { pathname: '/sign-in', query: { path: router.pathname } }
           }
         >
           <CardButton>
-            <StyledText link h4 regular>
-              ADD PROJECTS
-            </StyledText>
+            {matches ? (
+              <GrAdd size={22} />
+            ) : (
+              <StyledText link h4 regular>
+                ADD PROJECTS
+              </StyledText>
+            )}
           </CardButton>
         </Link>
       </div>
