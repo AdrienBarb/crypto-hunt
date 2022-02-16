@@ -14,11 +14,14 @@ import { AiFillHeart } from 'react-icons/ai'
 import { CgWebsite } from 'react-icons/cg'
 import { HiDocument } from 'react-icons/hi'
 import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
+import axios from 'axios'
+import DetailsNumberCard from './DetailsNumberCard'
 
 const CryptoProjectDetails = ({
   projectId,
   getCurrentCryptoProject,
   state,
+  getProjectNumbers,
 }) => {
   const router = useRouter()
   const matches = useMediaQuery('(max-width:768px)')
@@ -26,6 +29,10 @@ const CryptoProjectDetails = ({
     const unsubscribe = getCurrentCryptoProject(projectId)
     return unsubscribe
   }, [])
+
+  useEffect(() => {
+    getProjectNumbers(state.cryptoProjectsReducers?.currentCryptoProject?.token)
+  }, [state.cryptoProjectsReducers?.currentCryptoProject])
   return (
     <StyledCryptoProjectDetails>
       <div className="header">
@@ -55,6 +62,72 @@ const CryptoProjectDetails = ({
         </Link>
       </div>
       <HorizontalDivider color={Colors.yellow} width="100%" />
+
+      {state.cryptoProjectsReducers.currentCryptoProjectNumbers && (
+        <>
+          <div className="numbers-wrapper">
+            <div className="numbers-row">
+              <DetailsNumberCard
+                title="Price"
+                value={
+                  state.cryptoProjectsReducers.currentCryptoProjectNumbers.PRICE
+                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
+                        .PRICE
+                    : '-'
+                }
+              />
+              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
+              <DetailsNumberCard
+                title="Market Cap"
+                value={
+                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
+                    .MKTCAP
+                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
+                        .MKTCAP
+                    : '-'
+                }
+              />
+              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
+              <DetailsNumberCard
+                title="Supply"
+                value={
+                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
+                    .SUPPLY
+                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
+                        .SUPPLY
+                    : '-'
+                }
+              />
+            </div>
+
+            <HorizontalMargin m2 />
+
+            <div className="numbers-row">
+              <DetailsNumberCard
+                title="24H"
+                value={
+                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
+                    .SUPPLY
+                    ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCT24HOUR}%`
+                    : '-'
+                }
+              />
+              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
+              <DetailsNumberCard
+                title="1D"
+                value={
+                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
+                    .SUPPLY
+                    ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCTDAY}%`
+                    : '-'
+                }
+              />
+            </div>
+          </div>
+          <HorizontalDivider color={Colors.yellow} width="100%" />
+        </>
+      )}
+
       <StyledText karla>
         {state.cryptoProjectsReducers.currentCryptoProject?.description
           ? state.cryptoProjectsReducers.currentCryptoProject.description
@@ -106,9 +179,9 @@ const CryptoProjectDetails = ({
       </div>
       <HorizontalMargin m1 />
 
-      {state.cryptoProjectsReducers.currentCryptoProject.networkOwnerRewards &&
+      {state.cryptoProjectsReducers.currentCryptoProject?.networkOwnerRewards &&
         state.cryptoProjectsReducers.currentCryptoProject
-          .addressOwnerRewards && (
+          ?.addressOwnerRewards && (
           <div className="bottom-card">
             <div>
               <StyledText>

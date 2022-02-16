@@ -11,6 +11,13 @@ export const StyledCryptoProjectDetails = styled.div`
     display: flex;
   }
 
+  .numbers-row {
+    display: flex;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
   .bottom-card {
     background-color: #dfe0e2;
     zidth: 100%;
