@@ -39,7 +39,7 @@ const CryptoProjectDetails = ({
     <StyledCryptoProjectDetails>
       <div className="header">
         {state.cryptoProjectsReducers.currentCryptoProject && (
-          <StyledText h1 bold karla>
+          <StyledText h2 bold karla>
             {state.cryptoProjectsReducers.currentCryptoProject.name} (
             {state.cryptoProjectsReducers.currentCryptoProject.token})
           </StyledText>
@@ -52,15 +52,13 @@ const CryptoProjectDetails = ({
               : { pathname: "/sign-in", query: { path: router.pathname } }
           }
         >
-          <CardButton>
-            {matches ? (
-              <FiEdit2 size={22} />
-            ) : (
-              <StyledText link h4 regular>
-                EDIT PROJECTS
-              </StyledText>
-            )}
-          </CardButton>
+          {matches ? (
+            <FiEdit2 size={16} color={Colors.yellow} />
+          ) : (
+            <StyledText link h4 bold color={Colors.yellow}>
+              EDIT PROJECTS
+            </StyledText>
+          )}
         </Link>
       </div>
       <HorizontalDivider color={Colors.yellow} width="100%" />
