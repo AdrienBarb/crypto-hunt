@@ -1,20 +1,20 @@
-import React from 'react'
-import { useEffect } from 'react'
-import Link from 'next/link'
-import { CardButton } from '../styles/StyledButton'
-import { StyledText } from '../styles/StyledText'
-import { StyledCryptoProjectDetails } from '../styles/StyledCryptoProjectDetails'
-import { HorizontalDivider } from '../styles/StyledDivider'
-import Colors from '../constants/Colors'
-import { useRouter } from 'next/router'
-import { StyledNFTProjectDetails } from '../styles/StyledNFTProjectDetails'
+import React from "react";
+import { useEffect } from "react";
+import Link from "next/link";
+import { CardButton } from "../styles/StyledButton";
+import { StyledText } from "../styles/StyledText";
+import { StyledCryptoProjectDetails } from "../styles/StyledCryptoProjectDetails";
+import { HorizontalDivider } from "../styles/StyledDivider";
+import Colors from "../constants/Colors";
+import { useRouter } from "next/router";
+import { StyledNFTProjectDetails } from "../styles/StyledNFTProjectDetails";
 
 const NFTProjectDetails = ({ projectId, getCurrentNFTProject, state }) => {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
-    const unsubscribe = getCurrentNFTProject(projectId)
-    return unsubscribe
-  }, [])
+    getCurrentNFTProject(projectId);
+  }, [router]);
+
   return (
     <StyledNFTProjectDetails>
       <div className="header">
@@ -26,8 +26,8 @@ const NFTProjectDetails = ({ projectId, getCurrentNFTProject, state }) => {
         <Link
           href={
             state.usersReducers.currentUser
-              ? '/edit-nft-project'
-              : { pathname: '/sign-in', query: { path: router.pathname } }
+              ? `/edit-nft-project/${projectId}`
+              : { pathname: "/sign-in", query: { path: router.pathname } }
           }
         >
           <CardButton>
@@ -39,7 +39,7 @@ const NFTProjectDetails = ({ projectId, getCurrentNFTProject, state }) => {
       </div>
       <HorizontalDivider color={Colors.yellow} width="100%" />
     </StyledNFTProjectDetails>
-  )
-}
+  );
+};
 
-export default NFTProjectDetails
+export default NFTProjectDetails;

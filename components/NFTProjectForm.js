@@ -1,69 +1,86 @@
-import React, { useEffect, useState } from 'react'
-import { Formik, Field, ErrorMessage, useFormik } from 'formik'
-import * as Yup from 'yup'
-import { ConnectFormWrapper } from '../styles/StyledConnectForm'
-import { useRouter } from 'next/router'
-import { StyledText } from '../styles/StyledText'
-import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
-import { Link } from 'next/link'
-import { HorizontalDivider } from '../styles/StyledDivider'
-import Colors from '../constants/Colors'
-import LoadingSpinner from './LoadingSpinner'
+import React, { useEffect, useState } from "react";
+import { Formik, Field, ErrorMessage, useFormik } from "formik";
+import * as Yup from "yup";
+import { ConnectFormWrapper } from "../styles/StyledConnectForm";
+import { useRouter } from "next/router";
+import { StyledText } from "../styles/StyledText";
+import { HorizontalMargin, VerticalMargin } from "../styles/StyledMargin";
+import { Link } from "next/link";
+import { HorizontalDivider } from "../styles/StyledDivider";
+import Colors from "../constants/Colors";
+import LoadingSpinner from "./LoadingSpinner";
 
 const NFTProjectForm = ({
   addNFTProject,
   editNFTProject,
-  edit,
+  projectId,
   state,
   checkIfProjectExist,
   cleanReducers,
+  getCurrentNFTProject,
 }) => {
-  const router = useRouter()
-  const [projectName, setProjectNameValue] = useState('')
-  const [isValidButtonVisible, setIsValidButtonVisible] = useState(false)
+  const router = useRouter();
+  const [projectName, setProjectNameValue] = useState("");
+  const [isValidButtonVisible, setIsValidButtonVisible] = useState(false);
 
   const [formValues, setFormValues] = useState({
-    name: edit ? state.nftProjectsReducers.currentNFTProject?.name : '',
-    description: edit
-      ? state.nftProjectsReducers.currentNFTProject?.description
-      : '',
-    websiteLink: edit
-      ? state.nftProjectsReducers.currentNFTProject?.websiteLink
-      : '',
-    whitePaperLink: edit
-      ? state.nftProjectsReducers.currentNFTProject?.whitePaperLink
-      : '',
-    twitterLink: edit
-      ? state.nftProjectsReducers.currentNFTProject?.twitterLink
-      : '',
-    networkOwnerRewards: edit
-      ? state.nftProjectsReducers.currentNFTProject?.networkOwnerRewards
-      : '',
-    addressOwnerRewards: edit
-      ? state.nftProjectsReducers.currentNFTProject?.addressOwnerRewards
-      : '',
+    name: "",
+    description: "",
+    websiteLink: "",
+    whitePaperLink: "",
+    twitterLink: "",
+    networkOwnerRewards: "",
+    addressOwnerRewards: "",
     tags: [],
-  })
+  });
 
   useEffect(() => {
     if (state.nftFormReducers.existingNFTProject.length > 0) {
       setFormValues({
         ...formValues,
-        name: '',
-      })
+        name: "",
+      });
     }
-  }, [state.nftFormReducers.existingNFTProject])
+  }, [state.nftFormReducers.existingNFTProject]);
+
+  useEffect(() => {
+    if (projectId) {
+      getCurrentNFTProject(projectId);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (projectId && state.nftProjectsReducers.currentNFTProject) {
+      setFormValues({
+        ...formValues,
+        name: state.cryptoProjectsReducers.currentNFTProject?.name,
+        description:
+          state.cryptoProjectsReducers.currentNFTProject?.description,
+        websiteLink:
+          state.cryptoProjectsReducers.currentNFTProject?.websiteLink,
+        whitePaperLink:
+          state.cryptoProjectsReducers.currentNFTProject?.whitePaperLink,
+        twitterLink:
+          state.cryptoProjectsReducers.currentNFTProject?.twitterLink,
+        networkOwnerRewards:
+          state.cryptoProjectsReducers.currentNFTProject?.networkOwnerRewards,
+        addressOwnerRewards:
+          state.cryptoProjectsReducers.currentNFTProject?.addressOwnerRewards,
+        tags: state.cryptoProjectsReducers.currentNFTProject?.tags,
+      });
+    }
+  }, [state.nftProjectsReducers.currentNFTProject]);
 
   const handleCheckIfExist = () => {
-    checkIfProjectExist(projectName)
-    setIsValidButtonVisible(!isValidButtonVisible)
-  }
+    checkIfProjectExist(projectName);
+    setIsValidButtonVisible(!isValidButtonVisible);
+  };
 
   useEffect(() => {
     return () => {
-      cleanReducers()
-    }
-  }, [])
+      cleanReducers();
+    };
+  }, []);
 
   return (
     <ConnectFormWrapper>
@@ -71,31 +88,31 @@ const NFTProjectForm = ({
         enableReinitialize={true}
         initialValues={formValues}
         validationSchema={Yup.object({
-          name: Yup.string().required('This field is required.'),
+          name: Yup.string().required("This field is required."),
         })}
         onSubmit={async (values, actions) => {
           try {
-            if (edit) {
+            if (projectId) {
               await editNFTProject(
                 values,
                 state.nftProjectsReducers.currentNFTProject?.id
-              )
+              );
               router.push(
                 `/nft/${state.nftProjectsReducers.currentNFTProject?.id}`
-              )
+              );
             } else {
-              await addNFTProject(values)
-              router.push('/nfts')
+              await addNFTProject(values);
+              router.push("/nfts");
             }
           } catch (error) {
-            console.log(error)
+            console.log(error);
           }
         }}
       >
         {(formik) => (
           <form className="form-container" onSubmit={formik.handleSubmit}>
             <StyledText h2 karla regular center>
-              {edit ? 'Edit the project' : 'Add a new NFT project'}
+              {projectId ? "Edit the project" : "Add a new NFT project"}
             </StyledText>
             <HorizontalMargin m1 />
 
@@ -104,16 +121,16 @@ const NFTProjectForm = ({
                 PROJECT NAME
               </StyledText>
               <Field
-                {...formik.getFieldProps('name')}
+                {...formik.getFieldProps("name")}
                 className="text-input"
                 id="name"
                 label="Nom du projet"
                 fullWidth={true}
                 onChange={(e) => {
-                  formik.handleChange(e)
-                  setProjectNameValue(e.target.value)
-                  setIsValidButtonVisible(true)
-                  cleanReducers()
+                  formik.handleChange(e);
+                  setProjectNameValue(e.target.value);
+                  setIsValidButtonVisible(true);
+                  cleanReducers();
                 }}
                 placeholder="Ex: Bored Ape Yacht Club"
               />
@@ -138,14 +155,14 @@ const NFTProjectForm = ({
 
             {state.nftFormReducers.loading ? (
               <LoadingSpinner />
-            ) : edit || state.nftFormReducers.formCanBeSubmit ? (
+            ) : projectId || state.nftFormReducers.formCanBeSubmit ? (
               <>
                 <div className="input-wrapper">
                   <StyledText h5 mono regular>
                     DESCRIPTION
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps('description')}
+                    {...formik.getFieldProps("description")}
                     id="description"
                     label="Description"
                     className="text-input"
@@ -165,7 +182,7 @@ const NFTProjectForm = ({
                     WEBSITE LINK
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps('websiteLink')}
+                    {...formik.getFieldProps("websiteLink")}
                     id="websiteLink"
                     label="Lien du site internet"
                     className="text-input"
@@ -182,7 +199,7 @@ const NFTProjectForm = ({
                     WHITEPAPER LINK
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps('whitePaperLink')}
+                    {...formik.getFieldProps("whitePaperLink")}
                     id="whitePaperLink"
                     className="text-input"
                     label="Lien du white paper"
@@ -198,7 +215,7 @@ const NFTProjectForm = ({
                     TWITTER LINK
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps('twitterLink')}
+                    {...formik.getFieldProps("twitterLink")}
                     id="twitterLink"
                     label="Lien twitter"
                     className="text-input"
@@ -210,8 +227,9 @@ const NFTProjectForm = ({
                   </StyledText>
                 </div>
 
-                {(!edit ||
+                {(!projectId ||
                   (state.usersReducers.currentUser &&
+                    state.nftProjectsReducers.currentNFTProject &&
                     state.usersReducers.currentUser.uid ==
                       state.nftProjectsReducers.currentNFTProject
                         .projectOwner)) && (
@@ -231,7 +249,7 @@ const NFTProjectForm = ({
                         YOUR REWARDS NETWORK
                       </StyledText>
                       <Field
-                        {...formik.getFieldProps('networkOwnerRewards')}
+                        {...formik.getFieldProps("networkOwnerRewards")}
                         id="networkOwnerRewards"
                         label="Rewards networks"
                         className="text-input"
@@ -252,7 +270,7 @@ const NFTProjectForm = ({
                         label="Rewards networks"
                         fullWidth={true}
                         placeholder="Ex: 0xaCe0A5bf0cf2a01c2c90A8F7je275430e1684a9"
-                        {...formik.getFieldProps('addressOwnerRewards')}
+                        {...formik.getFieldProps("addressOwnerRewards")}
                       />
                       <StyledText color="red">
                         <ErrorMessage name="addressOwnerRewards" />
@@ -270,13 +288,13 @@ const NFTProjectForm = ({
                 </div>
               </>
             ) : (
-              ''
+              ""
             )}
           </form>
         )}
       </Formik>
     </ConnectFormWrapper>
-  )
-}
+  );
+};
 
-export default NFTProjectForm
+export default NFTProjectForm;

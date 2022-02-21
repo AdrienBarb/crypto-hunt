@@ -1,36 +1,40 @@
-import { connect } from 'react-redux'
-import NFTProjectForm from '../components/NFTProjectForm'
+import { connect } from "react-redux";
+import NFTProjectForm from "../components/NFTProjectForm";
 import {
   addNFTProject,
   editNFTProject,
-} from '../store/actions/nftProjectsActions'
+  getCurrentNFTProject,
+} from "../store/actions/nftProjectsActions";
 import {
   checkIfProjectExist,
   cleanReducers,
-} from '../store/actions/nftFormActions'
+} from "../store/actions/nftFormActions";
 
 const mapStatetoProps = (state) => ({
   state,
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   addNFTProject: (cryptoProjectValues) => {
-    dispatch(addNFTProject(cryptoProjectValues))
+    dispatch(addNFTProject(cryptoProjectValues));
   },
   editNFTProject: (cryptoProjectValues, id) => {
-    dispatch(editNFTProject(cryptoProjectValues, id))
+    dispatch(editNFTProject(cryptoProjectValues, id));
   },
   checkIfProjectExist: (value) => {
-    dispatch(checkIfProjectExist(value))
+    dispatch(checkIfProjectExist(value));
   },
   cleanReducers: () => {
-    dispatch(cleanReducers())
+    dispatch(cleanReducers());
   },
-})
+  getCurrentNFTProject: (id) => {
+    dispatch(getCurrentNFTProject(id));
+  },
+});
 
 const NFTProjectFormContainer = connect(
   mapStatetoProps,
   mapDispatchToProps
-)(NFTProjectForm)
+)(NFTProjectForm);
 
-export default NFTProjectFormContainer
+export default NFTProjectFormContainer;
