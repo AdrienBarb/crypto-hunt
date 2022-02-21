@@ -29,7 +29,7 @@ const HeaderProjectList = ({ state, title, addUrl }) => {
           {matches ? (
             <GrFormAdd size={22} color={Colors.yellow} />
           ) : (
-            <StyledText link h4 regular color={Colors.yellow}>
+            <StyledText link h4 bold color={Colors.yellow}>
               ADD PROJECTS
             </StyledText>
           )}
