@@ -24,8 +24,8 @@ const EventForm = ({
   const router = useRouter();
 
   const [formValues, setFormValues] = useState({
-    projectType: "",
-    otherProjectType: "",
+    eventType: "",
+    otherEventType: "",
     currentDate: new Date(),
     link: "",
   });
@@ -42,7 +42,7 @@ const EventForm = ({
         enableReinitialize={true}
         initialValues={formValues}
         validationSchema={Yup.object({
-          projectType: Yup.string().required("This field is required."),
+          eventType: Yup.string().required("This field is required."),
         })}
         onSubmit={async (values, actions) => {
           try {
@@ -61,10 +61,10 @@ const EventForm = ({
                   EVENT TYPE
                 </StyledText>
                 <Field
-                  {...formik.getFieldProps("projectType")}
+                  {...formik.getFieldProps("eventType")}
                   className="text-input"
                   as="select"
-                  id="projectType"
+                  id="eventType"
                   label="Nom du projet"
                   fullWidth={true}
                   placeholder="Ex: ICO, Listing.."
@@ -75,26 +75,26 @@ const EventForm = ({
                   <option value="other">Other</option>
                 </Field>
                 <StyledText color="red">
-                  <ErrorMessage name="projectType" />
+                  <ErrorMessage name="eventType" />
                 </StyledText>
               </div>
 
-              {formik.values.projectType == "other" && (
+              {formik.values.eventType == "other" && (
                 <div className="input-wrapper">
                   <StyledText h5 mono regular color="black">
                     OTHER EVENT TYPE
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps("otherProjectType")}
+                    {...formik.getFieldProps("otherEventType")}
                     className="text-input"
-                    id="otherProjectType"
+                    id="otherEventType"
                     label="Nom du projet"
                     fullWidth={true}
                     placeholder="Ex: Launching app"
                   />
 
                   <StyledText color="red">
-                    <ErrorMessage name="otherProjectType" />
+                    <ErrorMessage name="otherEventType" />
                   </StyledText>
                 </div>
               )}
