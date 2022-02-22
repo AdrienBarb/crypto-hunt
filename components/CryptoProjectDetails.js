@@ -1,24 +1,24 @@
-import React from 'react'
-import { useEffect } from 'react'
-import Link from 'next/link'
-import { CardButton } from '../styles/StyledButton'
-import { StyledText } from '../styles/StyledText'
-import { StyledCryptoProjectDetails } from '../styles/StyledCryptoProjectDetails'
-import { HorizontalDivider } from '../styles/StyledDivider'
-import Colors from '../constants/Colors'
-import { useRouter } from 'next/router'
-import { FiEdit2 } from 'react-icons/fi'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { BsTwitter } from 'react-icons/bs'
-import { AiFillHeart } from 'react-icons/ai'
-import { CgWebsite } from 'react-icons/cg'
-import { HiDocument } from 'react-icons/hi'
-import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
-import axios from 'axios'
-import DetailsNumberCard from './DetailsNumberCard'
-import Modal from './Modal'
-import { useState } from 'react'
-import EventForm from '../connects/EventForm'
+import React from "react";
+import { useEffect } from "react";
+import Link from "next/link";
+import { CardButton } from "../styles/StyledButton";
+import { StyledText } from "../styles/StyledText";
+import { StyledCryptoProjectDetails } from "../styles/StyledCryptoProjectDetails";
+import { HorizontalDivider } from "../styles/StyledDivider";
+import Colors from "../constants/Colors";
+import { useRouter } from "next/router";
+import { FiEdit2 } from "react-icons/fi";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { BsTwitter } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
+import { CgWebsite } from "react-icons/cg";
+import { HiDocument } from "react-icons/hi";
+import { HorizontalMargin, VerticalMargin } from "../styles/StyledMargin";
+import axios from "axios";
+import DetailsNumberCard from "./DetailsNumberCard";
+import Modal from "./Modal";
+import { useState } from "react";
+import EventForm from "../connects/EventForm";
 
 const CryptoProjectDetails = ({
   projectId,
@@ -26,24 +26,26 @@ const CryptoProjectDetails = ({
   state,
   getProjectNumbers,
 }) => {
-  const router = useRouter()
-  const matches = useMediaQuery('(max-width:768px)')
-  const [showModal, setShowModal] = useState(false)
+  const router = useRouter();
+  const matches = useMediaQuery("(max-width:768px)");
+  const [showModal, setShowModal] = useState(false);
 
-  console.log(showModal)
-
-  useEffect(() => {
-    getCurrentCryptoProject(projectId)
-  }, [router])
+  console.log(showModal);
 
   useEffect(() => {
-    getProjectNumbers(state.cryptoProjectsReducers?.currentCryptoProject?.token)
-  }, [state.cryptoProjectsReducers?.currentCryptoProject])
+    getCurrentCryptoProject(projectId);
+  }, [router]);
+
+  useEffect(() => {
+    getProjectNumbers(
+      state.cryptoProjectsReducers?.currentCryptoProject?.token
+    );
+  }, [state.cryptoProjectsReducers?.currentCryptoProject]);
 
   const handleShowModal = () => {
-    console.log('Je clique')
-    setShowModal(true)
-  }
+    console.log("Je clique");
+    setShowModal(true);
+  };
 
   return (
     <StyledCryptoProjectDetails>
@@ -59,7 +61,7 @@ const CryptoProjectDetails = ({
           href={
             state.usersReducers.currentUser
               ? `/edit-crypto-project/${projectId}`
-              : { pathname: '/sign-in', query: { path: router.pathname } }
+              : { pathname: "/sign-in", query: { path: router.pathname } }
           }
         >
           {matches ? (
@@ -83,7 +85,7 @@ const CryptoProjectDetails = ({
                   state.cryptoProjectsReducers.currentCryptoProjectNumbers.PRICE
                     ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
                         .PRICE
-                    : '-'
+                    : "-"
                 }
               />
               {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
@@ -94,7 +96,7 @@ const CryptoProjectDetails = ({
                     .MKTCAP
                     ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
                         .MKTCAP
-                    : '-'
+                    : "-"
                 }
               />
               {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
@@ -105,7 +107,7 @@ const CryptoProjectDetails = ({
                     .SUPPLY
                     ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
                         .SUPPLY
-                    : '-'
+                    : "-"
                 }
               />
             </div>
@@ -119,7 +121,7 @@ const CryptoProjectDetails = ({
                   state.cryptoProjectsReducers.currentCryptoProjectNumbers
                     .SUPPLY
                     ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCT24HOUR}%`
-                    : '-'
+                    : "-"
                 }
               />
               {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
@@ -129,7 +131,7 @@ const CryptoProjectDetails = ({
                   state.cryptoProjectsReducers.currentCryptoProjectNumbers
                     .SUPPLY
                     ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCTDAY}%`
-                    : '-'
+                    : "-"
                 }
               />
             </div>
@@ -141,7 +143,7 @@ const CryptoProjectDetails = ({
       <StyledText karla>
         {state.cryptoProjectsReducers.currentCryptoProject?.description
           ? state.cryptoProjectsReducers.currentCryptoProject.description
-          : '-'}
+          : "-"}
       </StyledText>
 
       <HorizontalMargin m1 />
@@ -199,14 +201,14 @@ const CryptoProjectDetails = ({
                 the project:
               </StyledText>
               <StyledText>
-                Network:{' '}
+                Network:{" "}
                 {
                   state.cryptoProjectsReducers.currentCryptoProject
                     .networkOwnerRewards
                 }
               </StyledText>
               <StyledText>
-                Adress:{' '}
+                Adress:{" "}
                 {
                   state.cryptoProjectsReducers.currentCryptoProject
                     .addressOwnerRewards
@@ -225,10 +227,10 @@ const CryptoProjectDetails = ({
         setShowModal={setShowModal}
         modalTitle="Add an event"
       >
-        <EventForm />
+        <EventForm projectId={projectId} setShowModal={setShowModal} />
       </Modal>
     </StyledCryptoProjectDetails>
-  )
-}
+  );
+};
 
-export default CryptoProjectDetails
+export default CryptoProjectDetails;

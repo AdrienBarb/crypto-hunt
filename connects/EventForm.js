@@ -1,20 +1,26 @@
-import { connect } from 'react-redux'
-import EventForm from '../components/EventForm'
-import { addCryptoProject } from '../store/actions/cryptoProjectsActions'
+import { connect } from "react-redux";
+import EventForm from "../components/EventForm";
+import {
+  createCryptoEvent,
+  cleanReducers,
+} from "../store/actions/cryptoEventsActions";
 
 const mapStatetoProps = (state) => ({
   state,
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  addCryptoProject: (cryptoProjectValues) => {
-    dispatch(addCryptoProject(cryptoProjectValues))
+  createCryptoEvent: (cryptoEventValues, projectId) => {
+    dispatch(createCryptoEvent(cryptoEventValues, projectId));
   },
-})
+  cleanReducers: () => {
+    dispatch(cleanReducers());
+  },
+});
 
 const EventFormContainer = connect(
   mapStatetoProps,
   mapDispatchToProps
-)(EventForm)
+)(EventForm);
 
-export default EventFormContainer
+export default EventFormContainer;

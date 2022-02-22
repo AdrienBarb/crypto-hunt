@@ -1,9 +1,9 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const StyledModal = styled.div`
   position: fixed;
-  z-index: 11000;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
+  z-index: 1000;
+  display: ${(props) => (props.visible ? "block" : "none")};
   top: 0;
   left: 0;
   bottom: 0;
@@ -29,4 +29,4 @@ export const StyledModal = styled.div`
     right: 0.4rem;
     cursor: pointer;
   }
-`
+`;
