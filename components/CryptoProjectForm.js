@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Formik, Field, ErrorMessage, useFormik } from "formik";
-import * as Yup from "yup";
-import { ConnectFormWrapper } from "../styles/StyledConnectForm";
-import { useRouter } from "next/router";
-import { StyledText } from "../styles/StyledText";
-import { HorizontalMargin, VerticalMargin } from "../styles/StyledMargin";
-import { Link } from "next/link";
-import { HorizontalDivider } from "../styles/StyledDivider";
-import Colors from "../constants/Colors";
-import LoadingSpinner from "./LoadingSpinner";
+import React, { useEffect, useState } from 'react'
+import { Formik, Field, ErrorMessage, useFormik } from 'formik'
+import * as Yup from 'yup'
+import { ConnectFormWrapper } from '../styles/StyledConnectForm'
+import { useRouter } from 'next/router'
+import { StyledText } from '../styles/StyledText'
+import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
+import { Link } from 'next/link'
+import { HorizontalDivider } from '../styles/StyledDivider'
+import Colors from '../constants/Colors'
+import LoadingSpinner from './LoadingSpinner'
 
 const CryptoProjectForm = ({
   addCryptoProject,
@@ -19,27 +19,27 @@ const CryptoProjectForm = ({
   cleanReducers,
   getCurrentCryptoProject,
 }) => {
-  const router = useRouter();
-  const [tokenValue, setTokenValue] = useState("");
-  const [isValidButtonVisible, setIsValidButtonVisible] = useState(false);
+  const router = useRouter()
+  const [tokenValue, setTokenValue] = useState('')
+  const [isValidButtonVisible, setIsValidButtonVisible] = useState(false)
 
   const [formValues, setFormValues] = useState({
-    name: "",
-    token: "",
-    description: "",
-    websiteLink: "",
-    whitePaperLink: "",
-    twitterLink: "",
-    networkOwnerRewards: "",
-    addressOwnerRewards: "",
+    name: '',
+    token: '',
+    description: '',
+    websiteLink: '',
+    whitePaperLink: '',
+    twitterLink: '',
+    networkOwnerRewards: '',
+    addressOwnerRewards: '',
     tags: [],
-  });
+  })
 
   useEffect(() => {
     if (projectId) {
-      getCurrentCryptoProject(projectId);
+      getCurrentCryptoProject(projectId)
     }
-  }, [router]);
+  }, [router])
 
   useEffect(() => {
     if (projectId && state.cryptoProjectsReducers.currentCryptoProject) {
@@ -62,19 +62,19 @@ const CryptoProjectForm = ({
           state.cryptoProjectsReducers.currentCryptoProject
             ?.addressOwnerRewards,
         tags: state.cryptoProjectsReducers.currentCryptoProject?.tags,
-      });
+      })
     }
-  }, [state.cryptoProjectsReducers.currentCryptoProject]);
+  }, [state.cryptoProjectsReducers.currentCryptoProject])
 
   useEffect(() => {
     if (state.cryptoFormReducers.existingCryptoProject.length > 0) {
       setFormValues({
         ...formValues,
-        name: "",
-        token: "",
-      });
+        name: '',
+        token: '',
+      })
     }
-  }, [state.cryptoFormReducers.existingCryptoProject]);
+  }, [state.cryptoFormReducers.existingCryptoProject])
 
   useEffect(() => {
     if (state.cryptoFormReducers.findedCryptoDetails) {
@@ -86,42 +86,42 @@ const CryptoProjectForm = ({
           ? state.cryptoFormReducers.findedCryptoDetails[
               Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
             ].name
-          : "",
+          : '',
         token: state.cryptoFormReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
         ]?.symbol
           ? state.cryptoFormReducers.findedCryptoDetails[
               Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
             ].symbol
-          : "",
+          : '',
         description: state.cryptoFormReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
         ]?.description
           ? state.cryptoFormReducers.findedCryptoDetails[
               Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
             ].description
-          : "",
+          : '',
         websiteLink: state.cryptoFormReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
         ]?.urls?.website?.length
           ? state.cryptoFormReducers.findedCryptoDetails?.[
               Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
             ]?.urls?.website[0]
-          : "",
+          : '',
         whitePaperLink: state.cryptoFormReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
         ]?.urls?.technical_doc?.length
           ? state.cryptoFormReducers.findedCryptoDetails?.[
               Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
             ]?.urls?.technical_doc[0]
-          : "",
+          : '',
         twitterLink: state.cryptoFormReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
         ]?.urls?.twitter?.length
           ? state.cryptoFormReducers.findedCryptoDetails?.[
               Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
             ]?.urls?.twitter[0]
-          : "",
+          : '',
         tags: state.cryptoFormReducers.findedCryptoDetails?.[
           Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
         ]?.tags?.length
@@ -129,22 +129,22 @@ const CryptoProjectForm = ({
               Object.keys(state.cryptoFormReducers.findedCryptoDetails)[0]
             ]?.tags
           : [],
-        networkOwnerRewards: "",
-        addressOwnerRewards: "",
-      });
+        networkOwnerRewards: '',
+        addressOwnerRewards: '',
+      })
     }
-  }, [state.cryptoFormReducers.findedCryptoDetails]);
+  }, [state.cryptoFormReducers.findedCryptoDetails])
 
   const handleCheckIfExist = () => {
-    checkIfProjectExist(tokenValue);
-    setIsValidButtonVisible(!isValidButtonVisible);
-  };
+    checkIfProjectExist(tokenValue)
+    setIsValidButtonVisible(!isValidButtonVisible)
+  }
 
   useEffect(() => {
     return () => {
-      cleanReducers();
-    };
-  }, []);
+      cleanReducers()
+    }
+  }, [])
 
   return (
     <ConnectFormWrapper>
@@ -152,8 +152,8 @@ const CryptoProjectForm = ({
         enableReinitialize={true}
         initialValues={formValues}
         validationSchema={Yup.object({
-          name: Yup.string().required("This field is required."),
-          token: Yup.string().required("This field is required."),
+          name: Yup.string().required('This field is required.'),
+          token: Yup.string().required('This field is required.'),
         })}
         onSubmit={async (values, actions) => {
           try {
@@ -161,23 +161,23 @@ const CryptoProjectForm = ({
               await editCryptoProject(
                 values,
                 state.cryptoProjectsReducers.currentCryptoProject?.id
-              );
+              )
               router.push(
                 `/crypto/${state.cryptoProjectsReducers.currentCryptoProject?.id}`
-              );
+              )
             } else {
-              await addCryptoProject(values);
-              router.push("/cryptos");
+              await addCryptoProject(values)
+              router.push('/cryptos')
             }
           } catch (error) {
-            console.log(error);
+            console.log(error)
           }
         }}
       >
         {(formik) => (
           <form className="form-container" onSubmit={formik.handleSubmit}>
             <StyledText h2 karla regular center>
-              {projectId ? "Edit the project" : "Add a new Crypto project"}
+              {projectId ? 'Edit the project' : 'Add a new Crypto project'}
             </StyledText>
             <HorizontalMargin m1 />
             <div className="input-wrapper">
@@ -185,7 +185,7 @@ const CryptoProjectForm = ({
                 TOKEN
               </StyledText>
               <Field
-                {...formik.getFieldProps("token")}
+                {...formik.getFieldProps('token')}
                 id="token"
                 className="text-input"
                 label="Token"
@@ -193,10 +193,10 @@ const CryptoProjectForm = ({
                 placeholder="Ex: ETH"
                 disabled={projectId}
                 onChange={(e) => {
-                  formik.handleChange(e);
-                  setTokenValue(e.target.value);
-                  setIsValidButtonVisible(true);
-                  cleanReducers();
+                  formik.handleChange(e)
+                  setTokenValue(e.target.value)
+                  setIsValidButtonVisible(true)
+                  cleanReducers()
                 }}
               />
               <StyledText color="red">
@@ -233,7 +233,7 @@ const CryptoProjectForm = ({
                     label="Nom du projet"
                     fullWidth={true}
                     placeholder="Ex: Ethereum"
-                    {...formik.getFieldProps("name")}
+                    {...formik.getFieldProps('name')}
                   />
                   <StyledText color="red">
                     <ErrorMessage name="name" />
@@ -245,7 +245,7 @@ const CryptoProjectForm = ({
                     DESCRIPTION
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps("description")}
+                    {...formik.getFieldProps('description')}
                     id="description"
                     label="Description"
                     className="text-input"
@@ -265,7 +265,7 @@ const CryptoProjectForm = ({
                     WEBSITE LINK
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps("websiteLink")}
+                    {...formik.getFieldProps('websiteLink')}
                     id="websiteLink"
                     label="Lien du site internet"
                     className="text-input"
@@ -282,7 +282,7 @@ const CryptoProjectForm = ({
                     WHITEPAPER LINK
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps("whitePaperLink")}
+                    {...formik.getFieldProps('whitePaperLink')}
                     id="whitePaperLink"
                     className="text-input"
                     label="Lien du white paper"
@@ -298,7 +298,7 @@ const CryptoProjectForm = ({
                     TWITTER LINK
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps("twitterLink")}
+                    {...formik.getFieldProps('twitterLink')}
                     id="twitterLink"
                     label="Lien twitter"
                     className="text-input"
@@ -314,7 +314,7 @@ const CryptoProjectForm = ({
                     TWITTER LINK
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps("test")}
+                    {...formik.getFieldProps('test')}
                     id="test"
                     label="Lien twitter"
                     className="text-input"
@@ -348,7 +348,7 @@ const CryptoProjectForm = ({
                         YOUR REWARDS NETWORK
                       </StyledText>
                       <Field
-                        {...formik.getFieldProps("networkOwnerRewards")}
+                        {...formik.getFieldProps('networkOwnerRewards')}
                         id="networkOwnerRewards"
                         label="Rewards networks"
                         className="text-input"
@@ -369,7 +369,7 @@ const CryptoProjectForm = ({
                         label="Rewards networks"
                         fullWidth={true}
                         placeholder="Ex: 0xaCe0A5bf0cf2a01c2c90A8F7je275430e1684a9"
-                        {...formik.getFieldProps("addressOwnerRewards")}
+                        {...formik.getFieldProps('addressOwnerRewards')}
                       />
                       <StyledText color="red">
                         <ErrorMessage name="addressOwnerRewards" />
@@ -387,13 +387,13 @@ const CryptoProjectForm = ({
                 </div>
               </>
             ) : (
-              ""
+              ''
             )}
           </form>
         )}
       </Formik>
     </ConnectFormWrapper>
-  );
-};
+  )
+}
 
-export default CryptoProjectForm;
+export default CryptoProjectForm
