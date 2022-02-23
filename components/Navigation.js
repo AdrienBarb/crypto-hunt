@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
-import Link from 'next/link'
-import { NavigationWrapper } from '../styles/StyledNavigation'
-import { LinkButton } from '../styles/StyledButton'
-import { Cross as Hamburger } from 'hamburger-react'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import FullScreenNavigation from '../connects/FullScreenNavigation'
-import { VerticalMargin } from '../styles/StyledMargin'
+import React, { useState } from "react";
+import Link from "next/link";
+import { NavigationWrapper } from "../styles/StyledNavigation";
+import { LinkButton } from "../styles/StyledButton";
+import { Cross as Hamburger } from "hamburger-react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import FullScreenNavigation from "../connects/FullScreenNavigation";
+import { VerticalMargin } from "../styles/StyledMargin";
 
 const Navigation = ({ state, logout }) => {
-  const matches = useMediaQuery('(max-width:768px)')
+  const matches = useMediaQuery("(max-width:768px)");
   const signOutHandler = async () => {
-    await logout()
-  }
-  const [isOpen, setOpen] = useState(false)
+    await logout();
+  };
+  const [isOpen, setOpen] = useState(false);
 
   return (
     <NavigationWrapper>
@@ -42,6 +42,10 @@ const Navigation = ({ state, logout }) => {
             <Link href="/nfts">
               <LinkButton>NFT's</LinkButton>
             </Link>
+            <VerticalMargin m2 />
+            <Link href="/events">
+              <LinkButton>Events</LinkButton>
+            </Link>
           </div>
 
           <div className="connection-link">
@@ -62,7 +66,7 @@ const Navigation = ({ state, logout }) => {
         </div>
       )}
     </NavigationWrapper>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;

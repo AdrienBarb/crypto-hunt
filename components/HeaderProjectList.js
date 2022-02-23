@@ -19,21 +19,23 @@ const HeaderProjectList = ({ state, title, addUrl }) => {
         <StyledText h2 bold karla>
           {title}
         </StyledText>
-        <Link
-          href={
-            state.usersReducers.currentUser
-              ? `${addUrl}`
-              : { pathname: "/sign-in", query: { path: router.pathname } }
-          }
-        >
-          {matches ? (
-            <GrFormAdd size={22} color={Colors.yellow} />
-          ) : (
-            <StyledText link h4 bold color={Colors.yellow}>
-              ADD PROJECTS
-            </StyledText>
-          )}
-        </Link>
+        {addUrl && (
+          <Link
+            href={
+              state.usersReducers.currentUser
+                ? `${addUrl}`
+                : { pathname: "/sign-in", query: { path: router.pathname } }
+            }
+          >
+            {matches ? (
+              <GrFormAdd size={22} color={Colors.yellow} />
+            ) : (
+              <StyledText link h4 bold color={Colors.yellow}>
+                ADD PROJECTS
+              </StyledText>
+            )}
+          </Link>
+        )}
       </div>
       <HorizontalDivider color={Colors.yellow} width="100%" />
     </StyledHeaderProjectList>
