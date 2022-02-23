@@ -1,40 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { Formik, Field, ErrorMessage, useFormik } from "formik";
-import * as Yup from "yup";
-import { ConnectFormWrapper } from "../styles/StyledConnectForm";
-import { useRouter } from "next/router";
-import { StyledText } from "../styles/StyledText";
-import { HorizontalMargin, VerticalMargin } from "../styles/StyledMargin";
-import { Link } from "next/link";
-import { HorizontalDivider } from "../styles/StyledDivider";
-import Colors from "../constants/Colors";
-import LoadingSpinner from "./LoadingSpinner";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DateTimePicker from "@mui/lab/DateTimePicker";
-import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from 'react'
+import { Formik, Field, ErrorMessage, useFormik } from 'formik'
+import * as Yup from 'yup'
+import { ConnectFormWrapper } from '../styles/StyledConnectForm'
+import { useRouter } from 'next/router'
+import { StyledText } from '../styles/StyledText'
+import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
+import { Link } from 'next/link'
+import { HorizontalDivider } from '../styles/StyledDivider'
+import Colors from '../constants/Colors'
+import LoadingSpinner from './LoadingSpinner'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DateTimePicker from '@mui/lab/DateTimePicker'
+import TextField from '@mui/material/TextField'
 
 const EventForm = ({
   createCryptoEvent,
   state,
   cleanReducers,
-  projectId,
+  project,
   setShowModal,
+  showModal,
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   const [formValues, setFormValues] = useState({
-    eventType: "",
-    otherEventType: "",
-    currentDate: new Date(),
-    link: "",
-  });
+    eventType: '',
+    otherEventType: '',
+    eventDate: new Date(),
+    link: '',
+  })
 
   useEffect(() => {
     return () => {
-      cleanReducers();
-    };
-  }, []);
+      cleanReducers()
+    }
+  }, [])
+
+  useEffect(() => {
+    setFormValues({
+      ...formValues,
+      eventType: '',
+      otherEventType: '',
+      eventDate: new Date(),
+      link: '',
+    })
+  }, [showModal])
 
   return (
     <ConnectFormWrapper>
@@ -42,14 +53,14 @@ const EventForm = ({
         enableReinitialize={true}
         initialValues={formValues}
         validationSchema={Yup.object({
-          eventType: Yup.string().required("This field is required."),
+          eventType: Yup.string().required('This field is required.'),
         })}
         onSubmit={async (values, actions) => {
           try {
-            await createCryptoEvent(values, projectId);
-            setShowModal(false);
+            await createCryptoEvent(values, project)
+            setShowModal(false)
           } catch (error) {
-            console.log(error);
+            console.log(error)
           }
         }}
       >
@@ -61,7 +72,7 @@ const EventForm = ({
                   EVENT TYPE
                 </StyledText>
                 <Field
-                  {...formik.getFieldProps("eventType")}
+                  {...formik.getFieldProps('eventType')}
                   className="text-input"
                   as="select"
                   id="eventType"
@@ -79,13 +90,13 @@ const EventForm = ({
                 </StyledText>
               </div>
 
-              {formik.values.eventType == "other" && (
+              {formik.values.eventType == 'other' && (
                 <div className="input-wrapper">
                   <StyledText h5 mono regular color="black">
                     OTHER EVENT TYPE
                   </StyledText>
                   <Field
-                    {...formik.getFieldProps("otherEventType")}
+                    {...formik.getFieldProps('otherEventType')}
                     className="text-input"
                     id="otherEventType"
                     label="Nom du projet"
@@ -107,9 +118,9 @@ const EventForm = ({
                   renderInput={(props) => (
                     <TextField {...props} variant="standard" />
                   )}
-                  value={formik.values.currentDate}
+                  value={formik.values.eventDate}
                   onChange={(newValue) => {
-                    formik.setFieldValue("currentDate", newValue);
+                    formik.setFieldValue('eventDate', newValue)
                   }}
                 />
               </div>
@@ -119,7 +130,7 @@ const EventForm = ({
                   LINK
                 </StyledText>
                 <Field
-                  {...formik.getFieldProps("link")}
+                  {...formik.getFieldProps('link')}
                   className="text-input"
                   id="link"
                   label="Nom du projet"
@@ -144,7 +155,7 @@ const EventForm = ({
         )}
       </Formik>
     </ConnectFormWrapper>
-  );
-};
+  )
+}
 
-export default EventForm;
+export default EventForm

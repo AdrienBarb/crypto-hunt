@@ -1,10 +1,10 @@
-import * as actions from "../actions/cryptoEventsActions";
+import * as actions from '../actions/cryptoEventsActions'
 
 const initialState = {
   events: [],
   cryptoEvents: [],
   loading: false,
-};
+}
 
 export const cryptoEventsReducers = (state = initialState, action) => {
   switch (action.type) {
@@ -13,8 +13,13 @@ export const cryptoEventsReducers = (state = initialState, action) => {
         ...state,
         events: [],
         cryptoEvents: [],
-      };
+      }
+    case actions.SET_CRYPTO_PROJECT_EVENTS:
+      return {
+        ...state,
+        cryptoEvents: action.payload,
+      }
     default:
-      return state;
+      return state
   }
-};
+}
