@@ -1,27 +1,28 @@
-import React from "react";
-import { useEffect } from "react";
-import Link from "next/link";
-import { CardButton } from "../styles/StyledButton";
-import { StyledText } from "../styles/StyledText";
-import { StyledCryptoProjectDetails } from "../styles/StyledCryptoProjectDetails";
-import { HorizontalDivider } from "../styles/StyledDivider";
-import Colors from "../constants/Colors";
-import { useRouter } from "next/router";
-import { FiEdit2 } from "react-icons/fi";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { BsTwitter } from "react-icons/bs";
-import { AiFillHeart } from "react-icons/ai";
-import { CgWebsite } from "react-icons/cg";
-import { HiDocument } from "react-icons/hi";
-import { HorizontalMargin, VerticalMargin } from "../styles/StyledMargin";
-import axios from "axios";
-import DetailsNumberCard from "./DetailsNumberCard";
-import Modal from "./Modal";
-import { useState } from "react";
-import EventForm from "../connects/EventForm";
-import moment from "moment";
-import SectionHeader from "./SectionHeader";
-import { GrFormAdd } from "react-icons/gr";
+import React from 'react'
+import { useEffect } from 'react'
+import Link from 'next/link'
+import { CardButton } from '../styles/StyledButton'
+import { StyledText } from '../styles/StyledText'
+import { StyledCryptoProjectDetails } from '../styles/StyledCryptoProjectDetails'
+import { HorizontalDivider } from '../styles/StyledDivider'
+import Colors from '../constants/Colors'
+import { useRouter } from 'next/router'
+import { FiEdit2 } from 'react-icons/fi'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { BsTwitter } from 'react-icons/bs'
+import { AiFillHeart } from 'react-icons/ai'
+import { CgWebsite } from 'react-icons/cg'
+import { HiDocument } from 'react-icons/hi'
+import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
+import axios from 'axios'
+import DetailsNumberCard from './DetailsNumberCard'
+import Modal from './Modal'
+import { useState } from 'react'
+import EventForm from '../connects/EventForm'
+import moment from 'moment'
+import SectionHeader from './SectionHeader'
+import { GrFormAdd } from 'react-icons/gr'
+import EventCard from './EventCard'
 
 const CryptoProjectDetails = ({
   projectId,
@@ -30,29 +31,27 @@ const CryptoProjectDetails = ({
   getProjectNumbers,
   getCurrentCryptoProjectEvent,
 }) => {
-  const router = useRouter();
-  const matches = useMediaQuery("(max-width:768px)");
-  const [showModal, setShowModal] = useState(false);
+  const router = useRouter()
+  const matches = useMediaQuery('(max-width:768px)')
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    getCurrentCryptoProject(projectId);
-  }, [router]);
+    getCurrentCryptoProject(projectId)
+  }, [router])
 
   useEffect(() => {
-    getProjectNumbers(
-      state.cryptoProjectsReducers?.currentCryptoProject?.token
-    );
-  }, [state.cryptoProjectsReducers?.currentCryptoProject]);
+    getProjectNumbers(state.cryptoProjectsReducers?.currentCryptoProject?.token)
+  }, [state.cryptoProjectsReducers?.currentCryptoProject])
 
   useEffect(() => {
     if (projectId) {
-      getCurrentCryptoProjectEvent(projectId);
+      getCurrentCryptoProjectEvent(projectId)
     }
-  }, [router]);
+  }, [router])
 
   const handleShowModal = () => {
-    setShowModal(true);
-  };
+    setShowModal(true)
+  }
 
   return (
     <StyledCryptoProjectDetails>
@@ -69,7 +68,7 @@ const CryptoProjectDetails = ({
       <StyledText karla>
         {state.cryptoProjectsReducers.currentCryptoProject?.description
           ? state.cryptoProjectsReducers.currentCryptoProject.description
-          : "-"}
+          : '-'}
       </StyledText>
 
       <HorizontalMargin m2 />
@@ -127,14 +126,14 @@ const CryptoProjectDetails = ({
                 the project:
               </StyledText>
               <StyledText>
-                Network:{" "}
+                Network:{' '}
                 {
                   state.cryptoProjectsReducers.currentCryptoProject
                     .networkOwnerRewards
                 }
               </StyledText>
               <StyledText>
-                Adress:{" "}
+                Adress:{' '}
                 {
                   state.cryptoProjectsReducers.currentCryptoProject
                     .addressOwnerRewards
@@ -157,7 +156,7 @@ const CryptoProjectDetails = ({
                   state.cryptoProjectsReducers.currentCryptoProjectNumbers.PRICE
                     ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
                         .PRICE
-                    : "-"
+                    : '-'
                 }
               />
               {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
@@ -168,7 +167,7 @@ const CryptoProjectDetails = ({
                     .MKTCAP
                     ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
                         .MKTCAP
-                    : "-"
+                    : '-'
                 }
               />
               {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
@@ -179,7 +178,7 @@ const CryptoProjectDetails = ({
                     .SUPPLY
                     ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
                         .SUPPLY
-                    : "-"
+                    : '-'
                 }
               />
             </div>
@@ -193,7 +192,7 @@ const CryptoProjectDetails = ({
                   state.cryptoProjectsReducers.currentCryptoProjectNumbers
                     .SUPPLY
                     ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCT24HOUR}%`
-                    : "-"
+                    : '-'
                 }
               />
               {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
@@ -203,7 +202,7 @@ const CryptoProjectDetails = ({
                   state.cryptoProjectsReducers.currentCryptoProjectNumbers
                     .SUPPLY
                     ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCTDAY}%`
-                    : "-"
+                    : '-'
                 }
               />
             </div>
@@ -227,13 +226,11 @@ const CryptoProjectDetails = ({
       {state.cryptoEventsReducers.cryptoEvents.length > 0 &&
         state.cryptoEventsReducers.cryptoEvents.map((cryptoEvent) => {
           return (
-            <div>
-              <StyledText>{cryptoEvent.eventType}</StyledText>
-              <StyledText>
-                {moment.unix(cryptoEvent.eventDate).format("LLLL")}
-              </StyledText>
-            </div>
-          );
+            <EventCard
+              eventType={cryptoEvent.eventType}
+              eventDate={cryptoEvent.eventDate}
+            />
+          )
         })}
 
       <Modal
@@ -248,7 +245,7 @@ const CryptoProjectDetails = ({
         />
       </Modal>
     </StyledCryptoProjectDetails>
-  );
-};
+  )
+}
 
-export default CryptoProjectDetails;
+export default CryptoProjectDetails
