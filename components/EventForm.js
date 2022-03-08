@@ -66,9 +66,9 @@ const EventForm = ({
       >
         {(formik) => (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} className="form-container">
               <div className="input-wrapper">
-                <StyledText h5 mono regular color="black">
+                <StyledText h5 mono regular color="#c2c9d6">
                   EVENT TYPE
                 </StyledText>
                 <Field
@@ -90,28 +90,33 @@ const EventForm = ({
                 </StyledText>
               </div>
 
-              {formik.values.eventType == 'other' && (
-                <div className="input-wrapper">
-                  <StyledText h5 mono regular color="black">
-                    OTHER EVENT TYPE
-                  </StyledText>
-                  <Field
-                    {...formik.getFieldProps('otherEventType')}
-                    className="text-input"
-                    id="otherEventType"
-                    label="Nom du projet"
-                    fullWidth={true}
-                    placeholder="Ex: Launching app"
-                  />
+              <HorizontalMargin m3 />
 
-                  <StyledText color="red">
-                    <ErrorMessage name="otherEventType" />
-                  </StyledText>
-                </div>
+              {formik.values.eventType == 'other' && (
+                <>
+                  <div className="input-wrapper">
+                    <StyledText h5 mono regular color="#c2c9d6">
+                      OTHER EVENT TYPE
+                    </StyledText>
+                    <Field
+                      {...formik.getFieldProps('otherEventType')}
+                      className="text-input"
+                      id="otherEventType"
+                      label="Nom du projet"
+                      fullWidth={true}
+                      placeholder="Ex: Launching app"
+                    />
+
+                    <StyledText color="red">
+                      <ErrorMessage name="otherEventType" />
+                    </StyledText>
+                  </div>
+                  <HorizontalMargin m3 />
+                </>
               )}
 
               <div className="input-wrapper">
-                <StyledText h5 mono regular color="black">
+                <StyledText h5 mono regular color="#c2c9d6">
                   EVENT DATE
                 </StyledText>
                 <DateTimePicker
@@ -125,8 +130,10 @@ const EventForm = ({
                 />
               </div>
 
+              <HorizontalMargin m3 />
+
               <div className="input-wrapper">
-                <StyledText h5 mono regular color="black">
+                <StyledText h5 mono regular color="#c2c9d6">
                   LINK
                 </StyledText>
                 <Field
@@ -142,11 +149,11 @@ const EventForm = ({
                   <ErrorMessage name="link" />
                 </StyledText>
               </div>
-              <HorizontalMargin m2 />
+              <HorizontalMargin m1 />
               <div className="button-wrapper">
                 <button className="form-button" type="submit">
-                  <StyledText link h4>
-                    Valider
+                  <StyledText link h4 center bold>
+                    VALIDER
                   </StyledText>
                 </button>
               </div>
