@@ -145,7 +145,7 @@ const CryptoProjectDetails = ({
 
       <HorizontalMargin m1 />
 
-      <SectionHeader title="Datas" />
+      {/* <SectionHeader title="Datas" />
       {state.cryptoProjectsReducers.currentCryptoProjectNumbers ? (
         <>
           <div className="numbers-wrapper">
@@ -212,26 +212,33 @@ const CryptoProjectDetails = ({
         <StyledText karla light>
           No data available.
         </StyledText>
-      )}
+      )} */}
 
       <HorizontalMargin m1 />
 
       <SectionHeader
         title="Events"
         buttonAction={handleShowModal}
-        buttonText="ADD PROJECTS"
+        buttonText="ADD EVENTS"
         ButtonIcon={() => <GrFormAdd size={22} color={Colors.yellow} />}
       />
 
-      {state.cryptoEventsReducers.cryptoEvents.length > 0 &&
-        state.cryptoEventsReducers.cryptoEvents.map((cryptoEvent) => {
-          return (
-            <EventCard
-              eventType={cryptoEvent.eventType}
-              eventDate={cryptoEvent.eventDate}
-            />
-          )
-        })}
+      <div className="crypto-events-wrapper">
+        {state.cryptoEventsReducers.cryptoEvents.length > 0 &&
+          state.cryptoEventsReducers.cryptoEvents.map((cryptoEvent) => {
+            return (
+              <Link href={cryptoEvent.link ? cryptoEvent.link : ''}>
+                <a target="_blank">
+                  <EventCard
+                    eventType={cryptoEvent.eventType}
+                    otherEventType={cryptoEvent.otherEventType}
+                    eventDate={cryptoEvent.eventDate}
+                  />
+                </a>
+              </Link>
+            )
+          })}
+      </div>
 
       <Modal
         visible={showModal}

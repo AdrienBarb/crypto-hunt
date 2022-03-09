@@ -27,8 +27,8 @@ export const StyledModal = styled.div`
 
   .cross-icon {
     position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
+    top: 1rem;
+    right: 1rem;
     cursor: pointer;
   }
 `

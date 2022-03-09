@@ -3,11 +3,15 @@ import { StyledEventCard } from '../styles/StyledEventCard'
 import { StyledText } from '../styles/StyledText'
 import moment from 'moment'
 
-const EventCard = ({ eventType, eventDate }) => {
+const EventCard = ({ eventType, otherEventType, eventDate }) => {
   return (
     <StyledEventCard>
-      <StyledText>{eventType}</StyledText>
-      <StyledText>{moment.unix(eventDate).format('LLLL')}</StyledText>
+      <StyledText karla h3>
+        {eventType == 'other' ? otherEventType : eventType}
+      </StyledText>
+      <StyledText karla>
+        {moment.unix(eventDate).format('MM/DD/YY hh:mm')}
+      </StyledText>
     </StyledEventCard>
   )
 }
