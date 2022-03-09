@@ -58,7 +58,13 @@ const CryptoProjectDetails = ({
       {state.cryptoProjectsReducers.currentCryptoProject && (
         <SectionHeader
           title={`${state.cryptoProjectsReducers.currentCryptoProject.name} (${state.cryptoProjectsReducers.currentCryptoProject.token})`}
-          buttonUrl={`/edit-crypto-project/${projectId}`}
+          buttonUrl={
+            state.cryptoProjectsReducers.currentCryptoProject &&
+            state.usersReducers.currentUser &&
+            state.usersReducers.currentUser.uid ==
+              state.cryptoProjectsReducers.currentCryptoProject.projectOwner &&
+            `/edit-crypto-project/${projectId}`
+          }
           buttonText="EDIT PROJECTS"
           ButtonIcon={() => <FiEdit2 size={16} color={Colors.yellow} />}
           currentUser={state.usersReducers.currentUser}
@@ -145,80 +151,15 @@ const CryptoProjectDetails = ({
 
       <HorizontalMargin m1 />
 
-      {/* <SectionHeader title="Datas" />
-      {state.cryptoProjectsReducers.currentCryptoProjectNumbers ? (
-        <>
-          <div className="numbers-wrapper">
-            <div className="numbers-row">
-              <DetailsNumberCard
-                title="Price"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers.PRICE
-                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                        .PRICE
-                    : '-'
-                }
-              />
-              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
-              <DetailsNumberCard
-                title="Market Cap"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .MKTCAP
-                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                        .MKTCAP
-                    : '-'
-                }
-              />
-              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
-              <DetailsNumberCard
-                title="Supply"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .SUPPLY
-                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                        .SUPPLY
-                    : '-'
-                }
-              />
-            </div>
-
-            <HorizontalMargin m2 />
-
-            <div className="numbers-row">
-              <DetailsNumberCard
-                title="24H"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .SUPPLY
-                    ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCT24HOUR}%`
-                    : '-'
-                }
-              />
-              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
-              <DetailsNumberCard
-                title="1D"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .SUPPLY
-                    ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCTDAY}%`
-                    : '-'
-                }
-              />
-            </div>
-          </div>
-        </>
-      ) : (
-        <StyledText karla light>
-          No data available.
-        </StyledText>
-      )} */}
-
-      <HorizontalMargin m1 />
-
       <SectionHeader
         title="Events"
-        buttonAction={handleShowModal}
+        buttonAction={
+          state.cryptoProjectsReducers.currentCryptoProject &&
+          state.usersReducers.currentUser &&
+          state.usersReducers.currentUser.uid ==
+            state.cryptoProjectsReducers.currentCryptoProject.projectOwner &&
+          handleShowModal
+        }
         buttonText="ADD EVENTS"
         ButtonIcon={() => <GrFormAdd size={22} color={Colors.yellow} />}
       />
