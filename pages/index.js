@@ -10,7 +10,10 @@ import {
 import { StyledText } from '../styles/StyledText'
 import { StyledHomepage } from '../styles/StyledHomepage'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import img from '../public/home-background.jpg'
+import { AiFillTwitterCircle } from 'react-icons/ai'
+import { BsTelegram } from 'react-icons/bs'
+import { TiSocialInstagramCircular } from 'react-icons/ti'
+
 import Image from 'next/image'
 
 export default function Home() {
@@ -18,7 +21,29 @@ export default function Home() {
   const matches = useMediaQuery('(max-width:768px)')
   return (
     <StyledHomepage>
-      {/* <Image src={img} layout="intrinsic" /> */}
+      <div className="container">
+        <div className="title">CRYPTO HUNT</div>
+        <div className="sub-title">
+          Join us! We share the most promising crypto projects every day.
+        </div>
+        <div className="link-wrapper">
+          <Link href={'https://twitter.com/_CryptoHunt'}>
+            <a target="_blank">
+              <AiFillTwitterCircle size={32} color="white" />
+            </a>
+          </Link>
+          <Link href={'https://t.me/cryptohuntannouncement'}>
+            <a target="_blank">
+              <BsTelegram size={28} color="white" />
+            </a>
+          </Link>
+          <Link href={'https://www.instagram.com/_cryptohunt/'}>
+            <a target="_blank">
+              <TiSocialInstagramCircular size={36} color="white" />
+            </a>
+          </Link>
+        </div>
+      </div>
     </StyledHomepage>
   )
 }
