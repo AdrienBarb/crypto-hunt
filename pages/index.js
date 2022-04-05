@@ -14,8 +14,6 @@ import { AiFillTwitterCircle } from 'react-icons/ai'
 import { BsTelegram } from 'react-icons/bs'
 import { TiSocialInstagramCircular } from 'react-icons/ti'
 
-import Image from 'next/image'
-
 export default function Home() {
   console.log('Hello')
   const matches = useMediaQuery('(max-width:768px)')
