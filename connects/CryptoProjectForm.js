@@ -1,34 +1,40 @@
-import { connect } from 'react-redux'
-import CryptoProjectForm from '../components/CryptoProjectForm'
+import { connect } from "react-redux";
+import CryptoProjectForm from "../components/CryptoProjectForm";
 import {
   addCryptoProject,
   editCryptoProject,
+  getCurrentCryptoProject,
+} from "../store/actions/cryptoProjectsActions";
+import {
   checkIfProjectExist,
-  getProjectDetails
-} from '../store/actions/cryptoProjectsActions'
+  cleanReducers,
+} from "../store/actions/cryptoFormActions";
 
 const mapStatetoProps = (state) => ({
   state,
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   addCryptoProject: (cryptoProjectValues) => {
-    dispatch(addCryptoProject(cryptoProjectValues))
+    dispatch(addCryptoProject(cryptoProjectValues));
   },
   editCryptoProject: (cryptoProjectValues, id) => {
-    dispatch(editCryptoProject(cryptoProjectValues, id))
+    dispatch(editCryptoProject(cryptoProjectValues, id));
   },
   checkIfProjectExist: (value) => {
-    dispatch(checkIfProjectExist(value))
+    dispatch(checkIfProjectExist(value));
   },
-  getProjectDetails: (value) => {
-    dispatch(getProjectDetails(value))
+  cleanReducers: () => {
+    dispatch(cleanReducers());
   },
-})
+  getCurrentCryptoProject: (id) => {
+    dispatch(getCurrentCryptoProject(id));
+  },
+});
 
 const CryptoProjectFormContainer = connect(
   mapStatetoProps,
   mapDispatchToProps
-)(CryptoProjectForm)
+)(CryptoProjectForm);
 
-export default CryptoProjectFormContainer
+export default CryptoProjectFormContainer;

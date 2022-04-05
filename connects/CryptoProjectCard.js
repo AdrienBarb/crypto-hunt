@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import CryptoProjectCard from '../components/CryptoProjectCard'
 import {
   voteUpForCryptoProject,
-  voteDownForCryptoProject
+  voteDownForCryptoProject,
 } from '../store/actions/cryptoProjectsActions'
 
 const mapStatetoProps = (state) => ({

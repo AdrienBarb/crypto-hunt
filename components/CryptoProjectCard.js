@@ -12,6 +12,7 @@ import Colors from '../constants/Colors'
 import Link from 'next/link'
 import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
 import { HorizontalDivider } from '../styles/StyledDivider'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const CryptoProjectCard = ({
   state,
@@ -20,6 +21,7 @@ const CryptoProjectCard = ({
   voteDownForCryptoProject,
 }) => {
   const router = useRouter()
+  const matches = useMediaQuery('(max-width:768px)')
 
   const navToCryptoProject = (id) => {
     router.push(`crypto/${id}`)
@@ -103,7 +105,7 @@ const CryptoProjectCard = ({
         </div>
       </div>
 
-      {data?.addressOwnerRewards && (
+      {!matches && data?.addressOwnerRewards && (
         <div className="bottom-card">
           <div>
             <StyledText>

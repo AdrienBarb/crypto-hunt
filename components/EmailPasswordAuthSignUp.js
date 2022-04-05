@@ -102,6 +102,7 @@ const EmailPasswordAuthSignUp = ({ signUp }) => {
                 <StyledText h4>Valider</StyledText>
               </button>
             </div>
+            <HorizontalMargin m1 />
             <StyledText className="create-account" center>
               Already an account ?
               <Link
@@ -110,7 +111,9 @@ const EmailPasswordAuthSignUp = ({ signUp }) => {
                   query: { path: Router.query.path },
                 }}
               >
-                <StyledText link className="navigation-link">Sign in!</StyledText>
+                <StyledText link bold className="navigation-link">
+                  Sign in!
+                </StyledText>
               </Link>
             </StyledText>
           </form>

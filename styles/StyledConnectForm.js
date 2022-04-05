@@ -4,7 +4,6 @@ export const ConnectFormWrapper = styled.div`
   background-color: white;
   margin: 0 auto;
   border-radius: 6px;
-  padding: 3rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -12,19 +11,17 @@ export const ConnectFormWrapper = styled.div`
 
   .form-container {
     color: black;
-    padding: 2rem;
-    border: 1px solid black;
-    border-radius: 6px;
-    max-width: 400px;
     width: 100%;
   }
 
   .input-wrapper {
-    margin-bottom: 1rem;
     flex-direction: column;
     align-items: start;
     justify-content: center;
     display: flex;
+    background-color: #eff2f5;
+    border-radius: 6px;
+    padding: 0.4rem;
 
     .text-input {
       border: none;
@@ -32,11 +29,17 @@ export const ConnectFormWrapper = styled.div`
       font-size: 18px;
       outline: none;
       width: 100%;
+      background-color: #eff2f5;
+      padding: 0;
     }
 
     .form-error-message {
       color: red;
     }
+  }
+
+  .input {
+    background-color: #eff2f5;
   }
 
   .button-wrapper {
@@ -45,17 +48,21 @@ export const ConnectFormWrapper = styled.div`
 
   .form-button {
     background: black;
-    padding: 0.2rem 0.6rem;
+    padding: 0.4rem 0.6rem;
     border: 1px solid black;
     border-radius: 6px;
     color: white;
     cursor: pointer;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .create-account {
     color: black;
     display: flex;
     margin-top: 2rem;
+    margin: 0 auto;
+    width: fit-content;
   }
 
   .navigation-link {

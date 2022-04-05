@@ -1,25 +1,21 @@
 import React from 'react'
 import Layout from '../connects/Layout'
-
-import { useRouter } from 'next/router'
 import {
   CenterContainer,
   ScreenContainer,
 } from '../styles/StyledScreenContainer'
-import CryptoProjectForm from '../connects/CryptoProjectForm'
+import NFTProjectForm from '../connects/NFTProjectForm'
 
-const EditCryptoProjectFormScreen = () => {
-  const router = useRouter()
-
+const AddCryptoNFTFormScreen = () => {
   return (
     <Layout>
       <ScreenContainer>
         <CenterContainer>
-          <CryptoProjectForm edit={router.pathname == '/edit-crypto-project'} />
+          <NFTProjectForm />
         </CenterContainer>
       </ScreenContainer>
     </Layout>
   )
 }
 
-export default EditCryptoProjectFormScreen
+export default AddCryptoNFTFormScreen
