@@ -4,8 +4,6 @@ import { normalize } from 'styled-normalize'
 export const GlobalStyle = createGlobalStyle`
 
 
-
-    ${normalize}
     * {
         text-decoration: none;
     }
@@ -20,6 +18,7 @@ export const GlobalStyle = createGlobalStyle`
         color: black;
         overflow-x: hidden;
         font-family: 'Karla';
+
     }
 
     a {

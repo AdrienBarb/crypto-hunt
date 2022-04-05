@@ -13,37 +13,28 @@ import LoadingSpinner from './LoadingSpinner'
 const NFTProjectForm = ({
   addNFTProject,
   editNFTProject,
-  edit,
+  projectId,
   state,
   checkIfProjectExist,
   cleanReducers,
+  getCurrentNFTProject,
 }) => {
   const router = useRouter()
   const [projectName, setProjectNameValue] = useState('')
   const [isValidButtonVisible, setIsValidButtonVisible] = useState(false)
 
   const [formValues, setFormValues] = useState({
-    name: edit ? state.nftProjectsReducers.currentNFTProject?.name : '',
-    description: edit
-      ? state.nftProjectsReducers.currentNFTProject?.description
-      : '',
-    websiteLink: edit
-      ? state.nftProjectsReducers.currentNFTProject?.websiteLink
-      : '',
-    whitePaperLink: edit
-      ? state.nftProjectsReducers.currentNFTProject?.whitePaperLink
-      : '',
-    twitterLink: edit
-      ? state.nftProjectsReducers.currentNFTProject?.twitterLink
-      : '',
-    networkOwnerRewards: edit
-      ? state.nftProjectsReducers.currentNFTProject?.networkOwnerRewards
-      : '',
-    addressOwnerRewards: edit
-      ? state.nftProjectsReducers.currentNFTProject?.addressOwnerRewards
-      : '',
+    name: '',
+    description: '',
+    websiteLink: '',
+    whitePaperLink: '',
+    twitterLink: '',
+    networkOwnerRewards: '',
+    addressOwnerRewards: '',
     tags: [],
   })
+
+  console.log(state)
 
   useEffect(() => {
     if (state.nftFormReducers.existingNFTProject.length > 0) {
@@ -53,6 +44,31 @@ const NFTProjectForm = ({
       })
     }
   }, [state.nftFormReducers.existingNFTProject])
+
+  useEffect(() => {
+    if (projectId) {
+      getCurrentNFTProject(projectId)
+    }
+  }, [router])
+
+  useEffect(() => {
+    if (projectId && state.nftProjectsReducers.currentNFTProject) {
+      setFormValues({
+        ...formValues,
+        name: state.nftProjectsReducers.currentNFTProject?.name,
+        description: state.nftProjectsReducers.currentNFTProject?.description,
+        websiteLink: state.nftProjectsReducers.currentNFTProject?.websiteLink,
+        whitePaperLink:
+          state.nftProjectsReducers.currentNFTProject?.whitePaperLink,
+        twitterLink: state.nftProjectsReducers.currentNFTProject?.twitterLink,
+        networkOwnerRewards:
+          state.nftProjectsReducers.currentNFTProject?.networkOwnerRewards,
+        addressOwnerRewards:
+          state.nftProjectsReducers.currentNFTProject?.addressOwnerRewards,
+        tags: state.nftProjectsReducers.currentNFTProject?.tags,
+      })
+    }
+  }, [state.nftProjectsReducers.currentNFTProject])
 
   const handleCheckIfExist = () => {
     checkIfProjectExist(projectName)
@@ -75,7 +91,7 @@ const NFTProjectForm = ({
         })}
         onSubmit={async (values, actions) => {
           try {
-            if (edit) {
+            if (projectId) {
               await editNFTProject(
                 values,
                 state.nftProjectsReducers.currentNFTProject?.id
@@ -95,7 +111,7 @@ const NFTProjectForm = ({
         {(formik) => (
           <form className="form-container" onSubmit={formik.handleSubmit}>
             <StyledText h2 karla regular center>
-              {edit ? 'Edit the project' : 'Add a new NFT project'}
+              {projectId ? 'Edit the project' : 'Add a new NFT project'}
             </StyledText>
             <HorizontalMargin m1 />
 
@@ -138,7 +154,7 @@ const NFTProjectForm = ({
 
             {state.nftFormReducers.loading ? (
               <LoadingSpinner />
-            ) : edit || state.nftFormReducers.formCanBeSubmit ? (
+            ) : projectId || state.nftFormReducers.formCanBeSubmit ? (
               <>
                 <div className="input-wrapper">
                   <StyledText h5 mono regular>
@@ -210,8 +226,9 @@ const NFTProjectForm = ({
                   </StyledText>
                 </div>
 
-                {(!edit ||
+                {(!projectId ||
                   (state.usersReducers.currentUser &&
+                    state.nftProjectsReducers.currentNFTProject &&
                     state.usersReducers.currentUser.uid ==
                       state.nftProjectsReducers.currentNFTProject
                         .projectOwner)) && (

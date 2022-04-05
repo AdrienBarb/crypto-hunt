@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import CryptoProjectDetails from '../components/CryptoProjectDetails'
+import { getCurrentCryptoProjectEvent } from '../store/actions/cryptoEventsActions'
 import {
   getCurrentCryptoProject,
   getProjectNumbers,
@@ -15,6 +16,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getProjectNumbers: (token) => {
     dispatch(getProjectNumbers(token))
+  },
+  getCurrentCryptoProjectEvent: (projectId) => {
+    dispatch(getCurrentCryptoProjectEvent(projectId))
   },
 })
 

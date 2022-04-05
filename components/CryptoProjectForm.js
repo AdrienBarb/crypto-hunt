@@ -13,38 +13,58 @@ import LoadingSpinner from './LoadingSpinner'
 const CryptoProjectForm = ({
   addCryptoProject,
   editCryptoProject,
-  edit,
+  projectId,
   state,
   checkIfProjectExist,
   cleanReducers,
+  getCurrentCryptoProject,
 }) => {
   const router = useRouter()
   const [tokenValue, setTokenValue] = useState('')
   const [isValidButtonVisible, setIsValidButtonVisible] = useState(false)
 
   const [formValues, setFormValues] = useState({
-    name: edit ? state.cryptoProjectsReducers.currentCryptoProject?.name : '',
-    token: edit ? state.cryptoProjectsReducers.currentCryptoProject?.token : '',
-    description: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.description
-      : '',
-    websiteLink: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.websiteLink
-      : '',
-    whitePaperLink: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.whitePaperLink
-      : '',
-    twitterLink: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.twitterLink
-      : '',
-    networkOwnerRewards: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.networkOwnerRewards
-      : '',
-    addressOwnerRewards: edit
-      ? state.cryptoProjectsReducers.currentCryptoProject?.addressOwnerRewards
-      : '',
+    name: '',
+    token: '',
+    description: '',
+    websiteLink: '',
+    whitePaperLink: '',
+    twitterLink: '',
+    networkOwnerRewards: '',
+    addressOwnerRewards: '',
     tags: [],
   })
+
+  useEffect(() => {
+    if (projectId) {
+      getCurrentCryptoProject(projectId)
+    }
+  }, [router])
+
+  useEffect(() => {
+    if (projectId && state.cryptoProjectsReducers.currentCryptoProject) {
+      setFormValues({
+        ...formValues,
+        name: state.cryptoProjectsReducers.currentCryptoProject?.name,
+        token: state.cryptoProjectsReducers.currentCryptoProject?.token,
+        description:
+          state.cryptoProjectsReducers.currentCryptoProject?.description,
+        websiteLink:
+          state.cryptoProjectsReducers.currentCryptoProject?.websiteLink,
+        whitePaperLink:
+          state.cryptoProjectsReducers.currentCryptoProject?.whitePaperLink,
+        twitterLink:
+          state.cryptoProjectsReducers.currentCryptoProject?.twitterLink,
+        networkOwnerRewards:
+          state.cryptoProjectsReducers.currentCryptoProject
+            ?.networkOwnerRewards,
+        addressOwnerRewards:
+          state.cryptoProjectsReducers.currentCryptoProject
+            ?.addressOwnerRewards,
+        tags: state.cryptoProjectsReducers.currentCryptoProject?.tags,
+      })
+    }
+  }, [state.cryptoProjectsReducers.currentCryptoProject])
 
   useEffect(() => {
     if (state.cryptoFormReducers.existingCryptoProject.length > 0) {
@@ -137,7 +157,7 @@ const CryptoProjectForm = ({
         })}
         onSubmit={async (values, actions) => {
           try {
-            if (edit) {
+            if (projectId) {
               await editCryptoProject(
                 values,
                 state.cryptoProjectsReducers.currentCryptoProject?.id
@@ -157,7 +177,7 @@ const CryptoProjectForm = ({
         {(formik) => (
           <form className="form-container" onSubmit={formik.handleSubmit}>
             <StyledText h2 karla regular center>
-              {edit ? 'Edit the project' : 'Add a new Crypto project'}
+              {projectId ? 'Edit the project' : 'Add a new Crypto project'}
             </StyledText>
             <HorizontalMargin m1 />
             <div className="input-wrapper">
@@ -171,7 +191,7 @@ const CryptoProjectForm = ({
                 label="Token"
                 fullWidth={true}
                 placeholder="Ex: ETH"
-                disabled={edit}
+                disabled={projectId}
                 onChange={(e) => {
                   formik.handleChange(e)
                   setTokenValue(e.target.value)
@@ -201,7 +221,7 @@ const CryptoProjectForm = ({
 
             {state.cryptoFormReducers.loading ? (
               <LoadingSpinner />
-            ) : edit || state.cryptoFormReducers.formCanBeSubmit ? (
+            ) : projectId || state.cryptoFormReducers.formCanBeSubmit ? (
               <>
                 <div className="input-wrapper">
                   <StyledText h5 mono regular color="black">
@@ -306,8 +326,9 @@ const CryptoProjectForm = ({
                   </StyledText>
                 </div>
 
-                {(!edit ||
-                  (state.usersReducers.currentUser &&
+                {(!projectId ||
+                  (state.cryptoProjectsReducers.currentCryptoProject &&
+                    state.usersReducers.currentUser &&
                     state.usersReducers.currentUser.uid ==
                       state.cryptoProjectsReducers.currentCryptoProject
                         .projectOwner)) && (

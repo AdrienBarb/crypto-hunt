@@ -16,116 +16,59 @@ import { HiDocument } from 'react-icons/hi'
 import { HorizontalMargin, VerticalMargin } from '../styles/StyledMargin'
 import axios from 'axios'
 import DetailsNumberCard from './DetailsNumberCard'
+import Modal from './Modal'
+import { useState } from 'react'
+import EventForm from '../connects/EventForm'
+import moment from 'moment'
+import SectionHeader from './SectionHeader'
+import { GrFormAdd } from 'react-icons/gr'
+import EventCard from './EventCard'
 
 const CryptoProjectDetails = ({
   projectId,
   getCurrentCryptoProject,
   state,
   getProjectNumbers,
+  getCurrentCryptoProjectEvent,
 }) => {
   const router = useRouter()
   const matches = useMediaQuery('(max-width:768px)')
+  const [showModal, setShowModal] = useState(false)
+
   useEffect(() => {
-    const unsubscribe = getCurrentCryptoProject(projectId)
-    return unsubscribe
-  }, [])
+    getCurrentCryptoProject(projectId)
+  }, [router])
 
   useEffect(() => {
     getProjectNumbers(state.cryptoProjectsReducers?.currentCryptoProject?.token)
   }, [state.cryptoProjectsReducers?.currentCryptoProject])
+
+  useEffect(() => {
+    if (projectId) {
+      getCurrentCryptoProjectEvent(projectId)
+    }
+  }, [router])
+
+  const handleShowModal = () => {
+    setShowModal(true)
+  }
+
   return (
     <StyledCryptoProjectDetails>
-      <div className="header">
-        {state.cryptoProjectsReducers.currentCryptoProject && (
-          <StyledText h1 bold karla>
-            {state.cryptoProjectsReducers.currentCryptoProject.name} (
-            {state.cryptoProjectsReducers.currentCryptoProject.token})
-          </StyledText>
-        )}
-
-        <Link
-          href={
-            state.usersReducers.currentUser
-              ? '/edit-crypto-project'
-              : { pathname: '/sign-in', query: { path: router.pathname } }
+      {state.cryptoProjectsReducers.currentCryptoProject && (
+        <SectionHeader
+          title={`${state.cryptoProjectsReducers.currentCryptoProject.name} (${state.cryptoProjectsReducers.currentCryptoProject.token})`}
+          buttonUrl={
+            state.cryptoProjectsReducers.currentCryptoProject &&
+            state.usersReducers.currentUser &&
+            state.usersReducers.currentUser.uid ==
+              state.cryptoProjectsReducers.currentCryptoProject.projectOwner &&
+            `/edit-crypto-project/${projectId}`
           }
-        >
-          <CardButton>
-            {matches ? (
-              <FiEdit2 size={22} />
-            ) : (
-              <StyledText link h4 regular>
-                EDIT PROJECTS
-              </StyledText>
-            )}
-          </CardButton>
-        </Link>
-      </div>
-      <HorizontalDivider color={Colors.yellow} width="100%" />
-
-      {state.cryptoProjectsReducers.currentCryptoProjectNumbers && (
-        <>
-          <div className="numbers-wrapper">
-            <div className="numbers-row">
-              <DetailsNumberCard
-                title="Price"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers.PRICE
-                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                        .PRICE
-                    : '-'
-                }
-              />
-              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
-              <DetailsNumberCard
-                title="Market Cap"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .MKTCAP
-                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                        .MKTCAP
-                    : '-'
-                }
-              />
-              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
-              <DetailsNumberCard
-                title="Supply"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .SUPPLY
-                    ? state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                        .SUPPLY
-                    : '-'
-                }
-              />
-            </div>
-
-            <HorizontalMargin m2 />
-
-            <div className="numbers-row">
-              <DetailsNumberCard
-                title="24H"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .SUPPLY
-                    ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCT24HOUR}%`
-                    : '-'
-                }
-              />
-              {matches ? <HorizontalMargin m4 /> : <VerticalMargin m1 />}
-              <DetailsNumberCard
-                title="1D"
-                value={
-                  state.cryptoProjectsReducers.currentCryptoProjectNumbers
-                    .SUPPLY
-                    ? `${state.cryptoProjectsReducers.currentCryptoProjectNumbers.CHANGEPCTDAY}%`
-                    : '-'
-                }
-              />
-            </div>
-          </div>
-          <HorizontalDivider color={Colors.yellow} width="100%" />
-        </>
+          buttonText="EDIT PROJECTS"
+          ButtonIcon={() => <FiEdit2 size={16} color={Colors.yellow} />}
+          currentUser={state.usersReducers.currentUser}
+        />
       )}
 
       <StyledText karla>
@@ -134,7 +77,7 @@ const CryptoProjectDetails = ({
           : '-'}
       </StyledText>
 
-      <HorizontalMargin m1 />
+      <HorizontalMargin m2 />
 
       <div className="links-wrapper">
         {state.cryptoProjectsReducers.currentCryptoProject?.twitterLink && (
@@ -177,7 +120,7 @@ const CryptoProjectDetails = ({
           </Link>
         )}
       </div>
-      <HorizontalMargin m1 />
+      <HorizontalMargin m2 />
 
       {state.cryptoProjectsReducers.currentCryptoProject?.networkOwnerRewards &&
         state.cryptoProjectsReducers.currentCryptoProject
@@ -205,6 +148,50 @@ const CryptoProjectDetails = ({
             </div>
           </div>
         )}
+
+      <HorizontalMargin m1 />
+
+      <SectionHeader
+        title="Events"
+        buttonAction={
+          state.cryptoProjectsReducers.currentCryptoProject &&
+          state.usersReducers.currentUser &&
+          state.usersReducers.currentUser.uid ==
+            state.cryptoProjectsReducers.currentCryptoProject.projectOwner &&
+          handleShowModal
+        }
+        buttonText="ADD EVENTS"
+        ButtonIcon={() => <GrFormAdd size={22} color={Colors.yellow} />}
+      />
+
+      <div className="crypto-events-wrapper">
+        {state.cryptoEventsReducers.cryptoEvents.length > 0 &&
+          state.cryptoEventsReducers.cryptoEvents.map((cryptoEvent) => {
+            return (
+              <Link href={cryptoEvent.link ? cryptoEvent.link : ''}>
+                <a target="_blank">
+                  <EventCard
+                    eventType={cryptoEvent.eventType}
+                    otherEventType={cryptoEvent.otherEventType}
+                    eventDate={cryptoEvent.eventDate}
+                  />
+                </a>
+              </Link>
+            )
+          })}
+      </div>
+
+      <Modal
+        visible={showModal}
+        setShowModal={setShowModal}
+        modalTitle="Add an event"
+      >
+        <EventForm
+          project={state.cryptoProjectsReducers?.currentCryptoProject}
+          setShowModal={setShowModal}
+          showModal={showModal}
+        />
+      </Modal>
     </StyledCryptoProjectDetails>
   )
 }

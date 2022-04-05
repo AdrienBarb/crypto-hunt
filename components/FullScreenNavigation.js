@@ -1,15 +1,15 @@
-import React from 'react'
-import { StyledFullScreenNavigation } from '../styles/StyledNavigation'
-import { LinkButton } from '../styles/StyledButton'
-import Link from 'next/link'
-import { HorizontalMargin } from '../styles/StyledMargin'
-import { HorizontalDivider } from '../styles/StyledDivider'
-import Colors from '../constants/Colors'
+import React from "react";
+import { StyledFullScreenNavigation } from "../styles/StyledNavigation";
+import { LinkButton } from "../styles/StyledButton";
+import Link from "next/link";
+import { HorizontalMargin } from "../styles/StyledMargin";
+import { HorizontalDivider } from "../styles/StyledDivider";
+import Colors from "../constants/Colors";
 
 const FullScreenNavigation = ({ state, logout }) => {
   const signOutHandler = async () => {
-    await logout()
-  }
+    await logout();
+  };
 
   return (
     <StyledFullScreenNavigation>
@@ -24,6 +24,10 @@ const FullScreenNavigation = ({ state, logout }) => {
         <HorizontalMargin m2 />
         <Link href="/nfts">
           <LinkButton>NFT's</LinkButton>
+        </Link>
+        <HorizontalMargin m2 />
+        <Link href="/events">
+          <LinkButton>Events</LinkButton>
         </Link>
       </div>
 
@@ -45,7 +49,7 @@ const FullScreenNavigation = ({ state, logout }) => {
         )}
       </div>
     </StyledFullScreenNavigation>
-  )
-}
+  );
+};
 
-export default FullScreenNavigation
+export default FullScreenNavigation;

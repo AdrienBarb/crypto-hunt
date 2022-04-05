@@ -3,6 +3,7 @@ import CryptoProjectForm from "../components/CryptoProjectForm";
 import {
   addCryptoProject,
   editCryptoProject,
+  getCurrentCryptoProject,
 } from "../store/actions/cryptoProjectsActions";
 import {
   checkIfProjectExist,
@@ -25,6 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   cleanReducers: () => {
     dispatch(cleanReducers());
+  },
+  getCurrentCryptoProject: (id) => {
+    dispatch(getCurrentCryptoProject(id));
   },
 });
 

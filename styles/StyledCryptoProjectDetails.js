@@ -18,9 +18,14 @@ export const StyledCryptoProjectDetails = styled.div`
     }
   }
 
+  .crypto-events-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   .bottom-card {
     background-color: #dfe0e2;
-    zidth: 100%;
+    width: 100%;
     border-radius: 6px;
     margin-top: 0.4rem;
     padding: 0.4rem;
